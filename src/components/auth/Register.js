@@ -98,7 +98,7 @@ export const Register = ({setToken}) => {
 
         <div className="field is-grouped">
           <div className="control">
-            <button className="button is-link" type="submit">Submit</button>
+            <button className="button is-link" type="submit" onClick={handleRegister}>Submit</button>
           </div>
           <div className="control">
             <Link to="/login" className="button is-link is-light">Cancel</Link>
