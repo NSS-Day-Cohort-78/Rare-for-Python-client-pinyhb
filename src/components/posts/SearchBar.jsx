@@ -16,6 +16,7 @@ export const SearchBar = ({ setFilteredPosts, posts }) => {
 	}
 	return (
 		<input
+			className=""
 			type="text"
 			placeholder="Search"
 			value={searchTerm}
