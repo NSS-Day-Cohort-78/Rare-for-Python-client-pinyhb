@@ -26,16 +26,17 @@ export const Posts = () => {
 						<tr>
 							<th>Title</th>
 							<th>Author</th>
-							<th>Date</th>
 							<th>Category</th>
-							<th>Tags</th>
 						</tr>
 					</thead>
 					<tbody>
 						{filteredPosts &&
-							filteredPosts.map(post => (
-								<PostList key={post.id} post={post} />
-							))}
+							filteredPosts.map(
+								post =>
+									post.approved && (
+										<PostList key={post.id} post={post} />
+									)
+							)}
 					</tbody>
 				</table>
 			</div>
