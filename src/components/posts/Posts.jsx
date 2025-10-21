@@ -3,6 +3,7 @@ import { PostContext } from "./PostProvider"
 import { PostList } from "./PostList"
 import { SearchBar } from "./SearchBar"
 import { useParams } from "react-router-dom"
+import { FilterCategory } from "./FilterCategory"
 
 export const Posts = () => {
 	const { posts, getAllPosts } = useContext(PostContext)
@@ -27,6 +28,10 @@ export const Posts = () => {
 		<>
 			<div className="p-5">
 				<SearchBar setFilteredPosts={setFilteredPosts} posts={posts} />
+				<FilterCategory
+					setFilteredPosts={setFilteredPosts}
+					posts={posts}
+				/>
 			</div>
 			<div className="p-5">
 				<table className=" table is-bordered is-fullwidth">
