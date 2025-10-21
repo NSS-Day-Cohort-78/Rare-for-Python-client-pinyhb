@@ -10,23 +10,24 @@ export const Posts = () => {
 	}, [])
 	return (
 		<>
-			<table className="table is-bordered is-fullwidth">
-				<thead>
-					<tr>
-						<th>Title</th>
-						<th>Author</th>
-						<th>Date</th>
-						<th>Category</th>
-						<th>Tags</th>
-					</tr>
-				</thead>
-
-				<tbody>
-					{posts.map(post => (
-						<PostList key={post.id} post={post} />
-					))}
-				</tbody>
-			</table>
+			<div className="p-5">
+				<table className=" table is-bordered is-fullwidth">
+					<thead>
+						<tr>
+							<th>Title</th>
+							<th>Author</th>
+							<th>Date</th>
+							<th>Category</th>
+							<th>Tags</th>
+						</tr>
+					</thead>
+					<tbody>
+						{posts.map(post => (
+							<PostList key={post.id} post={post} />
+						))}
+					</tbody>
+				</table>
+			</div>
 		</>
 	)
 }
