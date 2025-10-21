@@ -1,15 +1,25 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { PostContext } from "./PostProvider"
 import { PostList } from "./PostList"
+import { SearchBar } from "./SearchBar"
 
 export const Posts = () => {
 	const { posts, getAllPosts } = useContext(PostContext)
+	const [filteredPosts, setFilteredPosts] = useState()
 
 	useEffect(() => {
 		getAllPosts()
 	}, [])
+
+	useEffect(() => {
+		setFilteredPosts(posts)
+	}, [posts])
+
 	return (
 		<>
+			<div className="p-5">
+				<SearchBar setFilteredPosts={setFilteredPosts} posts={posts} />
+			</div>
 			<div className="p-5">
 				<table className=" table is-bordered is-fullwidth">
 					<thead>
@@ -22,9 +32,10 @@ export const Posts = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{posts.map(post => (
-							<PostList key={post.id} post={post} />
-						))}
+						{filteredPosts &&
+							filteredPosts.map(post => (
+								<PostList key={post.id} post={post} />
+							))}
 					</tbody>
 				</table>
 			</div>
