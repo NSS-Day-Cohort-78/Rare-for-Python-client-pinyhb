@@ -10,8 +10,11 @@ export const FilterCategory = ({ setFilteredPosts, posts }) => {
 	}, [])
 
 	const handleChange = e => {
+		setSelectedCategory(parseInt(e.target.value))
+	}
+
+	useEffect(() => {
 		if (selectedCategory > 0) {
-			setSelectedCategory(parseInt(e.target.value))
 			const filtered = posts.filter(
 				p => p.category.id === selectedCategory
 			)
@@ -19,7 +22,7 @@ export const FilterCategory = ({ setFilteredPosts, posts }) => {
 		} else {
 			setFilteredPosts(posts)
 		}
-	}
+	}, [selectedCategory])
 	return (
 		<select
 			onChange={handleChange}
