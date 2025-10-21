@@ -4,6 +4,7 @@ export const PostContext = createContext()
 
 export const PostProvider = ({ children }) => {
 	const [posts, setPosts] = useState([])
+	const [post, setPost] = useState({})
 
 	const getAllPosts = () => {
 		fetch(`http://localhost:8088/posts`)
@@ -11,8 +12,14 @@ export const PostProvider = ({ children }) => {
 			.then(setPosts)
 	}
 
+	const getPostById = id => {
+		fetch(`http://localhost:8088/posts/${id}`)
+			.then(res => res.json())
+			.then(setPost)
+	}
+
 	return (
-		<PostContext.Provider value={{ posts, getAllPosts }}>
+		<PostContext.Provider value={{ posts, getAllPosts, getPostById, post }}>
 			{children}
 		</PostContext.Provider>
 	)
