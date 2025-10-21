@@ -3,7 +3,7 @@ import { createContext, useState } from "react"
 export const PostContext = createContext()
 
 export const PostProvider = ({ children }) => {
-	const [posts, setPosts] = useState()
+	const [posts, setPosts] = useState([])
 
 	const getAllPosts = () => {
 		fetch(`http://localhost:8088/posts`)
