@@ -2,18 +2,28 @@ import React, { useContext, useEffect, useState } from "react"
 import { PostContext } from "./PostProvider"
 import { PostList } from "./PostList"
 import { SearchBar } from "./SearchBar"
+import { UserContext } from "../auth/UserProvider"
+import { useParams } from "react-router-dom"
 
 export const Posts = () => {
 	const { posts, getAllPosts } = useContext(PostContext)
+	const { token } = useContext(UserContext)
+
 	const [filteredPosts, setFilteredPosts] = useState()
+	const { user } = useParams()
 
 	useEffect(() => {
 		getAllPosts()
 	}, [])
 
 	useEffect(() => {
-		setFilteredPosts(posts)
-	}, [posts])
+		if (user) {
+			const userPosts = posts.filter(p => p.user.id === parseInt(user))
+			setFilteredPosts(userPosts)
+		} else {
+			setFilteredPosts(posts)
+		}
+	}, [posts, user])
 
 	return (
 		<>
