@@ -2,12 +2,10 @@ import React, { useContext, useEffect, useState } from "react"
 import { PostContext } from "./PostProvider"
 import { PostList } from "./PostList"
 import { SearchBar } from "./SearchBar"
-import { UserContext } from "../auth/UserProvider"
 import { useParams } from "react-router-dom"
 
 export const Posts = () => {
 	const { posts, getAllPosts } = useContext(PostContext)
-	const { token } = useContext(UserContext)
 
 	const [filteredPosts, setFilteredPosts] = useState()
 	const { user } = useParams()
