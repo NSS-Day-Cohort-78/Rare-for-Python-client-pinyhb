@@ -19,6 +19,7 @@ export const Posts = () => {
 							<th>Date</th>
 							<th>Category</th>
 							<th>Tags</th>
+							<th>Edit</th>
 						</tr>
 					</thead>
 					<tbody>
