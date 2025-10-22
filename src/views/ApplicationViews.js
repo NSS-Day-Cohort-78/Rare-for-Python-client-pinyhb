@@ -7,6 +7,7 @@ import { Posts } from "../components/posts/Posts"
 import { PostDetails } from "../components/posts/PostDetails"
 import { CategoryProvider } from "../components/posts/CategoryProvider"
 import { EditPost } from "../components/posts/EditPost"
+import { Users } from "../components/users/Users"
 
 export const ApplicationViews = ({ token, setToken }) => {
 	return (
@@ -32,6 +33,7 @@ export const ApplicationViews = ({ token, setToken }) => {
 						<Route path="posts/:id" element={<PostDetails />} />
 						<Route path="user-posts/:user" element={<Posts />} />
             <Route path="edit-post/:id" element={<EditPost />} />
+						<Route path="users" element={<Users />} />
 					</Route>
 				</Route>
 			</Routes>
