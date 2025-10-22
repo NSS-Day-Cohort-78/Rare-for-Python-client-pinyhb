@@ -10,14 +10,18 @@ export const PostList = ({ post }) => {
 
 	return (
 		<tr>
-			<td>{post.title}</td>
-			<td>
+			<td
+				className="is-clickable"
+				onClick={() => navigate(`/posts/${post.id}`)}>
+				{post.title}
+			</td>
+			<td
+				className="is-clickable"
+				onClick={() => navigate(`/user-posts/${post.user.id}`)}>
 				{post.user.first_name} {post.user.last_name}
 			</td>
-			<td>{post.publication_date}</td>
 			<td>{post.category.label}</td>
 			<td><button onClick={navToEditPost}>Edit</button></td>
-			<td>put tags here</td>
 		</tr>
 	)
 }

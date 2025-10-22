@@ -4,6 +4,8 @@ import { Register } from "../components/auth/Register"
 import { Authorized } from "./Authorized"
 import { PostProvider } from "../components/posts/PostProvider"
 import { Posts } from "../components/posts/Posts"
+import { PostDetails } from "../components/posts/PostDetails"
+import { CategoryProvider } from "../components/posts/CategoryProvider"
 import { EditPost } from "../components/posts/EditPost"
 
 export const ApplicationViews = ({ token, setToken }) => {
@@ -21,10 +23,14 @@ export const ApplicationViews = ({ token, setToken }) => {
 						path="/"
 						element={
 							<PostProvider>
-								<Outlet />
+								<CategoryProvider>
+									<Outlet />
+								</CategoryProvider>
 							</PostProvider>
 						}>
 						<Route index element={<Posts />} />
+						<Route path="posts/:id" element={<PostDetails />} />
+						<Route path="user-posts/:user" element={<Posts />} />
             <Route path="edit-post/:id" element={<EditPost />} />
 					</Route>
 				</Route>
