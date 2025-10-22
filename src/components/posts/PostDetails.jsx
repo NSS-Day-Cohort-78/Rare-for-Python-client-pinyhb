@@ -1,20 +1,22 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { PostContext } from "./PostProvider"
 import { useParams } from "react-router-dom"
 import { UserContext } from "../auth/UserProvider"
+import { ConfirmDelete } from "./ConfirmDelete"
 
 export const PostDetails = () => {
 	const { getPostById, post } = useContext(PostContext)
 	const { id } = useParams()
 	const { token } = useContext(UserContext)
+	const [modal, setModal] = useState(false)
 
 	useEffect(() => {
 		getPostById(id)
-	}, [post])
+	}, [])
 
 	return (
 		<>
-			<div className="p-5 is-flex is-align-items-center">
+			<div className="p-5">
 				<div className="card is-flex-grow-1 ">
 					<header className="card-header">
 						<h1 className="card-header-title">{post.title}</h1>
@@ -41,13 +43,18 @@ export const PostDetails = () => {
 					</div>
 				</div>
 			</div>
-			{parseInt(token) === post.user.id ? (
+
+			{parseInt(token) === post.user?.id ? (
 				<div className="is-flex is-align-items-center is-justify-content-center">
-					<i className="fa-solid fa-trash is-clickable"></i>
+					<i
+						onClick={() => setModal(true)}
+						className="fa-solid fa-trash is-clickable"></i>
 				</div>
 			) : (
 				""
 			)}
+
+			{modal ? <ConfirmDelete setModal={setModal} post={post} /> : ""}
 		</>
 	)
 }

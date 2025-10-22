@@ -18,8 +18,15 @@ export const PostProvider = ({ children }) => {
 			.then(setPost)
 	}
 
+	const deletePost = id => {
+		return fetch(`http://localhost:8088/posts/${id}`, {
+			method: "DELETE"
+		})
+	}
+
 	return (
-		<PostContext.Provider value={{ posts, getAllPosts, getPostById, post }}>
+		<PostContext.Provider
+			value={{ posts, getAllPosts, getPostById, post, deletePost }}>
 			{children}
 		</PostContext.Provider>
 	)
