@@ -9,6 +9,7 @@ import { CategoryProvider } from "../components/posts/CategoryProvider"
 import { EditPost } from "../components/posts/EditPost"
 import { Users } from "../components/users/Users"
 import { UserDetails } from "../components/users/UserDetails"
+import { Categories } from "../components/posts/Categories"
 
 export const ApplicationViews = ({ token, setToken }) => {
 	return (
@@ -39,6 +40,7 @@ export const ApplicationViews = ({ token, setToken }) => {
 							path="user-profile/:id"
 							element={<UserDetails />}
 						/>
+            <Route path="categories" element={<Categories />} />
 					</Route>
 				</Route>
 			</Routes>
