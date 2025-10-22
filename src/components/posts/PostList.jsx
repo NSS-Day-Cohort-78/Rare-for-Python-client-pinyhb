@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom"
 export const PostList = ({ post }) => {
 	const navigate = useNavigate()
 
+	const navToEditPost = () => {
+		navigate(`/edit-post/${post.id}`)
+	}
+
 	return (
 		<tr>
 			<td
@@ -17,6 +21,7 @@ export const PostList = ({ post }) => {
 				{post.user.first_name} {post.user.last_name}
 			</td>
 			<td>{post.category.label}</td>
+			<td><button onClick={navToEditPost}>Edit</button></td>
 		</tr>
 	)
 }

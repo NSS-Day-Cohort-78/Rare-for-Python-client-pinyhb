@@ -40,6 +40,7 @@ export const Posts = () => {
 							<th>Title</th>
 							<th>Author</th>
 							<th>Category</th>
+							<th>Edit</th>
 						</tr>
 					</thead>
 					<tbody>
