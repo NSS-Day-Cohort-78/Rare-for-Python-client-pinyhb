@@ -26,14 +26,14 @@ export const Posts = () => {
 
 	return (
 		<>
-			<div className="p-5">
+			<div className="container is-flex is-flex-direction-row is-justify-content-space-evenly p-5">
 				<SearchBar setFilteredPosts={setFilteredPosts} posts={posts} />
 				<FilterCategory
 					setFilteredPosts={setFilteredPosts}
 					posts={posts}
 				/>
 			</div>
-			<div className="p-5">
+			<div className="p-5 container">
 				<table className=" table is-bordered is-fullwidth">
 					<thead>
 						<tr>
@@ -44,11 +44,12 @@ export const Posts = () => {
 					</thead>
 					<tbody>
 						{filteredPosts &&
-							filteredPosts.map(
-								post =>
-									post.approved && (
-										<PostList key={post.id} post={post} />
-									)
+							filteredPosts.map(post =>
+								post.approved ? (
+									<PostList key={post.id} post={post} />
+								) : (
+									""
+								)
 							)}
 					</tbody>
 				</table>
