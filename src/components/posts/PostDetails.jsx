@@ -3,6 +3,7 @@ import { PostContext } from "./PostProvider"
 import { useParams } from "react-router-dom"
 import { UserContext } from "../auth/UserProvider"
 import { ConfirmDelete } from "./ConfirmDelete"
+import "./post.css"
 
 export const PostDetails = () => {
 	const { getPostById, post } = useContext(PostContext)
@@ -16,8 +17,8 @@ export const PostDetails = () => {
 
 	return (
 		<>
-			<div className="p-5">
-				<div className="card is-flex-grow-1 ">
+			<div className="post-container p-5">
+				<div className="card">
 					<header className="card-header">
 						<h1 className="card-header-title">{post.title}</h1>
 						<p className="card-header-icon">
