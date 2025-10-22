@@ -1,15 +1,31 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import { getPostById } from "./PostProvider"
 
 export const EditPost = () => {
     const [postObj, setPostObj] = useState({})
+    const { id } = useParams()
+    const navigate = useNavigate()
+
+    const postId = parseInt(id)
+
+    useEffect(() => {
+        getPostById(postId).then((postArr) => {
+            if (postArr && postArr.length > 0) {
+                setPostObj(postArr[0])
+            }
+        })
+    }, [postId])
+
+    const handleCancel = () => navigate(`/`)
 
     return (
         <div>
             <form>
                 <h1>Edit Post</h1>
-                <div class="field">
-                    <label class="label">Title</label>
-                        <div class="control">
+                <div className="field">
+                    <label className="label">Title</label>
+                        <div className="control">
                             <input 
                                 type="text"
                                 placeholder="Type here"
@@ -22,10 +38,10 @@ export const EditPost = () => {
                             />
                         </div>
                 </div>
-                <div class="field">
-                    <label class="label">Category</label>
+                <div className="field">
+                    <label className="label">Category</label>
                     {/* add category options */}
-                        <div class="control">
+                        <div className="control">
                             <select
                                 value={postObj.category_id || ""}
                                 onChange={(e) => {
@@ -36,8 +52,8 @@ export const EditPost = () => {
                             />
                         </div>
                 </div>
-                <div class="field">
-                    <label class="label">Content</label>
+                <div className="field">
+                    <label className="label">Content</label>
                     {/* add tags */}
                         <textarea 
                             className="textarea"
@@ -52,7 +68,7 @@ export const EditPost = () => {
                         ></textarea>
                 </div>
                 <button>Save</button>
-                <button>Cancel</button>
+                <button onClick={handleCancel}>Cancel</button>
             </form>
         </div>
     )

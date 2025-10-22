@@ -17,3 +17,7 @@ export const PostProvider = ({ children }) => {
 		</PostContext.Provider>
 	)
 }
+
+export const getPostById = (id) => {
+    return fetch (`http://localhost:3000/edit-post/${id}`).then(res => res.json())
+}
