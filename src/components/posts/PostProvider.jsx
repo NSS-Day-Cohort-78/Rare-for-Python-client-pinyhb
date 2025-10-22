@@ -24,14 +24,20 @@ export const PostProvider = ({ children }) => {
 		})
 	}
 
+	const updatePost = updatedPost => {
+		return fetch(`http://localhost:8088/posts/${updatedPost.id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(updatedPost)
+		})
+	}
+
 	return (
 		<PostContext.Provider
-			value={{ posts, getAllPosts, getPostById, post, deletePost }}>
+			value={{ posts, getAllPosts, getPostById, post, deletePost, updatePost }}>
 			{children}
 		</PostContext.Provider>
 	)
 }
-
-// export const getPostById = (id) => {
-//     return fetch (`http://localhost:3000/edit-post/${id}`).then(res => res.json())
-// }
