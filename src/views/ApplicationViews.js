@@ -5,10 +5,11 @@ import { Authorized } from "./Authorized"
 import { PostProvider } from "../components/posts/PostProvider"
 import { Posts } from "../components/posts/Posts"
 import { PostDetails } from "../components/posts/PostDetails"
-import { CategoryProvider } from "../components/posts/CategoryProvider"
+import { CategoryProvider } from "../components/categories/CategoryProvider"
 import { EditPost } from "../components/posts/EditPost"
 import { Users } from "../components/users/Users"
 import { UserDetails } from "../components/users/UserDetails"
+import { AddCategory } from "../components/categories/AddCategory"
 
 export const ApplicationViews = ({ token, setToken }) => {
 	return (
@@ -33,12 +34,13 @@ export const ApplicationViews = ({ token, setToken }) => {
 						<Route index element={<Posts />} />
 						<Route path="posts/:id" element={<PostDetails />} />
 						<Route path="user-posts/:user" element={<Posts />} />
-            <Route path="edit-post/:id" element={<EditPost />} />
+						<Route path="edit-post/:id" element={<EditPost />} />
 						<Route path="users" element={<Users />} />
 						<Route
 							path="user-profile/:id"
 							element={<UserDetails />}
 						/>
+						<Route path="add-category" element={<AddCategory />} />
 					</Route>
 				</Route>
 			</Routes>
