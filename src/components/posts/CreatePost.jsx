@@ -33,10 +33,7 @@ export const CreatePost = () => {
                 }
 
                 addNewPost(newPost).then(res => {
-                    if ("valid" in res && res.valid) {
-                        navigate("/")
-                    }
-                })
+                    navigate("/postdetails")})
             }
         else {
             console.log("fill out all fields!!!")
