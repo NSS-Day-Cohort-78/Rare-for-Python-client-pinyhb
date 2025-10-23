@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom"
 import { UserContext } from "../auth/UserProvider"
 import { ConfirmDelete } from "./ConfirmDelete"
 import "./post.css"
+import { ViewCommentsButton } from "../comments/ViewCommentsButton"
+import { AddCommentsButton } from "../comments/AddCommentsButton"
 
 export const PostDetails = () => {
 	const { getPostById, post } = useContext(PostContext)
@@ -41,6 +43,10 @@ export const PostDetails = () => {
 						<p className="card-footer-item">
 							{post.user?.username}
 						</p>
+					</div>
+					<div className="is-flex is-justify-content-space-between">
+						<ViewCommentsButton id={post.id} />
+						<AddCommentsButton id={post.id} />
 					</div>
 				</div>
 			</div>
