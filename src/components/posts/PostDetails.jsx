@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom"
 import { UserContext } from "../auth/UserProvider"
 import { ConfirmDelete } from "./ConfirmDelete"
 import "./post.css"
+import { ViewCommentsButton } from "../comments/ViewCommentsButton"
 
 export const PostDetails = () => {
 	const { getPostById, post } = useContext(PostContext)
@@ -42,6 +43,7 @@ export const PostDetails = () => {
 							{post.user?.username}
 						</p>
 					</div>
+					<ViewCommentsButton id={post.id} />
 				</div>
 			</div>
 

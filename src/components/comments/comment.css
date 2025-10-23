@@ -1,0 +1,16 @@
+div.comment.container {
+	border: 1px solid black;
+	width: 40rem;
+	height: 15rem;
+	margin-top: 2rem;
+	border-radius: 0.5rem;
+}
+
+.comment h2 {
+	font-weight: 500;
+	font-size: 1.8rem;
+}
+
+.center {
+	text-align: center;
+}
