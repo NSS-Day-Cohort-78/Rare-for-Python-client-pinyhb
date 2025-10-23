@@ -6,6 +6,7 @@ import { PostProvider } from "../components/posts/PostProvider"
 import { Posts } from "../components/posts/Posts"
 import { CreatePost } from "../components/posts/CreatePost"
 import { PostDetails } from "../components/posts/PostDetails"
+import { Categories } from "../components/categories/Categories"
 import { CategoryProvider } from "../components/categories/CategoryProvider"
 import { EditPost } from "../components/posts/EditPost"
 import { Users } from "../components/users/Users"
@@ -43,6 +44,7 @@ export const ApplicationViews = ({ token, setToken }) => {
 							path="user-profile/:id"
 							element={<UserDetails />}
 						/>
+            <Route path="categories" element={<Categories />} />
 						<Route path="add-category" element={<AddCategory />} />
 					</Route>
 				</Route>
