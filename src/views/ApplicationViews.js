@@ -4,6 +4,7 @@ import { Register } from "../components/auth/Register"
 import { Authorized } from "./Authorized"
 import { PostProvider } from "../components/posts/PostProvider"
 import { Posts } from "../components/posts/Posts"
+import { CreatePost } from "../components/posts/CreatePost"
 import { PostDetails } from "../components/posts/PostDetails"
 import { CategoryProvider } from "../components/categories/CategoryProvider"
 import { EditPost } from "../components/posts/EditPost"
@@ -32,6 +33,8 @@ export const ApplicationViews = ({ token, setToken }) => {
 							</PostProvider>
 						}>
 						<Route index element={<Posts />} />
+						<Route path="createpost" element={<CreatePost />} />
+						{<Route path="postdetails" />}
 						<Route path="posts/:id" element={<PostDetails />} />
 						<Route path="user-posts/:user" element={<Posts />} />
 						<Route path="edit-post/:id" element={<EditPost />} />
