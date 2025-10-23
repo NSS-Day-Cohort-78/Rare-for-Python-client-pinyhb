@@ -4,6 +4,7 @@ import { Register } from "../components/auth/Register"
 import { Authorized } from "./Authorized"
 import { PostProvider } from "../components/posts/PostProvider"
 import { Posts } from "../components/posts/Posts"
+import { CreatePost } from "../components/posts/CreatePost"
 
 export const ApplicationViews = ({ token, setToken }) => {
 	return (
@@ -24,6 +25,7 @@ export const ApplicationViews = ({ token, setToken }) => {
 							</PostProvider>
 						}>
 						<Route index element={<Posts />} />
+						<Route path="createpost" element={<CreatePost />} />
 					</Route>
 				</Route>
 			</Routes>
