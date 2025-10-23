@@ -20,18 +20,24 @@ export const Categories = () => {
             <div className="p-5 container">
                 <table className="table is-bordered is-fullwidth">
                     <tbody>
+                        <tr>
+                            <td>
+                                All Categories
+                            </td>
+                        </tr>
                         {categories.map(category => 
-                            <tr key={category.id}>
+                            <tr key={category.id} id={category.id}>
                                 <td>       
                                     {category.label}
                                     <button className="m-3">Edit</button>
-                                    <button className="">Delete</button>
+                                    <button>Delete</button>
                                 </td>
                             </tr>
                         )}
                     </tbody>
                 </table>
             </div>
+            <button className="container">Create New Category</button>
         </>
     )
 }

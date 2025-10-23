@@ -11,6 +11,10 @@ export const CategoryProvider = ({ children }) => {
 			.then(setCategories)
 	}
 
+	const updateCategory = updatedCategory => {
+		return fetch
+	}
+
 	return (
 		<CategoryContext.Provider value={{ categories, getAllCategories }}>
 			{children}
