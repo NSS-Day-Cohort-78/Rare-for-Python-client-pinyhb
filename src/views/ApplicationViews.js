@@ -15,6 +15,7 @@ import { AddCategory } from "../components/categories/AddCategory"
 import { Comments } from "../components/comments/Comments"
 import { CommentsProvider } from "../components/comments/CommentsProvider"
 import { AddCommentForm } from "../components/comments/AddCommentForm"
+import { EditCommentForm } from "../components/comments/EditCommentForm"
 
 export const ApplicationViews = ({ token, setToken }) => {
 	return (
@@ -47,6 +48,10 @@ export const ApplicationViews = ({ token, setToken }) => {
 							<Route
 								path="comment/add"
 								element={<AddCommentForm />}
+							/>
+							<Route
+								path="comment/:commentId/edit"
+								element={<EditCommentForm />}
 							/>
 						</Route>
 						<Route path="user-posts/:user" element={<Posts />} />
