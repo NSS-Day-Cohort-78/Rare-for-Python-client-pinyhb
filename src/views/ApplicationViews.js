@@ -5,6 +5,11 @@ import { Authorized } from "./Authorized"
 import { PostProvider } from "../components/posts/PostProvider"
 import { Posts } from "../components/posts/Posts"
 import { CreatePost } from "../components/posts/CreatePost"
+import { PostDetails } from "../components/posts/PostDetails"
+import { CategoryProvider } from "../components/posts/CategoryProvider"
+import { EditPost } from "../components/posts/EditPost"
+import { Users } from "../components/users/Users"
+import { UserDetails } from "../components/users/UserDetails"
 
 export const ApplicationViews = ({ token, setToken }) => {
 	return (
@@ -21,12 +26,22 @@ export const ApplicationViews = ({ token, setToken }) => {
 						path="/"
 						element={
 							<PostProvider>
-								<Outlet />
+								<CategoryProvider>
+									<Outlet />
+								</CategoryProvider>
 							</PostProvider>
 						}>
 						<Route index element={<Posts />} />
 						<Route path="createpost" element={<CreatePost />} />
 						{<Route path="postdetails" />}
+						<Route path="posts/:id" element={<PostDetails />} />
+						<Route path="user-posts/:user" element={<Posts />} />
+            <Route path="edit-post/:id" element={<EditPost />} />
+						<Route path="users" element={<Users />} />
+						<Route
+							path="user-profile/:id"
+							element={<UserDetails />}
+						/>
 					</Route>
 				</Route>
 			</Routes>
