@@ -11,6 +11,8 @@ import { EditPost } from "../components/posts/EditPost"
 import { Users } from "../components/users/Users"
 import { UserDetails } from "../components/users/UserDetails"
 import { AddCategory } from "../components/categories/AddCategory"
+import { Comments } from "../components/comments/Comments"
+import { CommentsProvider } from "../components/comments/CommentsProvider"
 
 export const ApplicationViews = ({ token, setToken }) => {
 	return (
@@ -27,15 +29,20 @@ export const ApplicationViews = ({ token, setToken }) => {
 						path="/"
 						element={
 							<PostProvider>
-								<CategoryProvider>
-									<Outlet />
-								</CategoryProvider>
+								<CommentsProvider>
+									<CategoryProvider>
+										<Outlet />
+									</CategoryProvider>
+								</CommentsProvider>
 							</PostProvider>
 						}>
 						<Route index element={<Posts />} />
 						<Route path="createpost" element={<CreatePost />} />
 						{<Route path="postdetails" />}
-						<Route path="posts/:id" element={<PostDetails />} />
+						<Route path="posts/:id" element={<Outlet />}>
+							<Route index element={<PostDetails />} />
+							<Route path="comments" element={<Comments />} />
+						</Route>
 						<Route path="user-posts/:user" element={<Posts />} />
 						<Route path="edit-post/:id" element={<EditPost />} />
 						<Route path="users" element={<Users />} />
