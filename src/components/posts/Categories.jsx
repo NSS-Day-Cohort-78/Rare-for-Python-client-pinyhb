@@ -1,3 +1,37 @@
+import { useContext, useEffect, useState } from "react"
+import { CategoryContext } from "./CategoryProvider"
+
 export const Categories = () => {
-    return <h1>All Categories</h1>
+    const { categories, getAllCategories } = useContext(CategoryContext)
+    const [allCategories, setAllCategories] = useState()
+
+    useEffect(() => {
+        getAllCategories()
+    }, [])
+
+    // useEffect(() => {
+    //     categories.map(category => 
+    //         setAllCategories(category)
+    //     )
+    // }, [categories])
+
+    return (
+        <>
+            <div className="p-5 container">
+                <table className="table is-bordered is-fullwidth">
+                    <tbody>
+                        {categories.map(category => 
+                            <tr key={category.id}>
+                                <td>       
+                                    {category.label}
+                                    <button className="m-3">Edit</button>
+                                    <button className="">Delete</button>
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+        </>
+    )
 }
