@@ -4,7 +4,7 @@ export const CategoryContext = createContext()
 
 export const CategoryProvider = ({ children }) => {
 	const [categories, setCategories] = useState([])
-	const [category, setCategory] = useState([])
+	const [category, setCategory] = useState({})
 
 	const getAllCategories = () => {
 		fetch(`http://localhost:8088/categories`)
@@ -13,7 +13,7 @@ export const CategoryProvider = ({ children }) => {
 	}
 
 	const getCategoryById = id => {
-		fetch(`http://localhost:8088/categories${id}`)
+		fetch(`http://localhost:8088/categories/${id}`)
 			.then(res => res.json())
 			.then(setCategory)
 	}
@@ -35,14 +35,26 @@ export const CategoryProvider = ({ children }) => {
 		})
 	}
 
+	const updateCategory = updatedCategory => {
+		return fetch(`http://localhost:8088/categories/${updatedCategory.id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(updatedCategory)
+		})
+	}
+
 	return (
 		<CategoryContext.Provider
 			value={{
 				categories,
+				category,
 				getAllCategories,
 				getCategoryById,
 				createCategory,
-				deleteCategory
+				deleteCategory,
+				updateCategory
 			}}>
 			{children}
 		</CategoryContext.Provider>

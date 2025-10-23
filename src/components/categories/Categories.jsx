@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import { CategoryContext } from "./CategoryProvider"
 import { DeleteCategoryButton } from "./DeleteCategoryButton"
 import { useNavigate } from "react-router-dom"
+import { EditCategoryButton } from "./EditCategoryButton"
 
 export const Categories = () => {
     const { categories, getAllCategories } = useContext(CategoryContext)
@@ -16,7 +17,6 @@ export const Categories = () => {
         const setAlphaOrder = categories.sort((a, b) => {
             return a.label.localeCompare(b.label)
         })
-        console.log("Alphabetical categories:", setAlphaOrder)
         setAllCategories(setAlphaOrder)
     }, [categories])
 
@@ -32,8 +32,10 @@ export const Categories = () => {
                             {return (<tr key={category.id} id={category.id}>
                                 <td className="is-flex is-align-items-center">       
                                     {category.label}
-                                        <button className="button m-3">Edit</button>
-                                        <DeleteCategoryButton />
+                                        <div className="ml-auto">
+                                                <EditCategoryButton id={category.id}/>
+                                                <DeleteCategoryButton id={category.id}/>
+                                        </div>
                                 </td>
                             </tr>)}
                         )}

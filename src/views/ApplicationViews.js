@@ -12,6 +12,7 @@ import { EditPost } from "../components/posts/EditPost"
 import { Users } from "../components/users/Users"
 import { UserDetails } from "../components/users/UserDetails"
 import { AddCategory } from "../components/categories/AddCategory"
+import { EditCategory } from "../components/categories/EditCategory"
 
 export const ApplicationViews = ({ token, setToken }) => {
 	return (
@@ -46,6 +47,7 @@ export const ApplicationViews = ({ token, setToken }) => {
 						/>
             <Route path="categories" element={<Categories />} />
 						<Route path="add-category" element={<AddCategory />} />
+            <Route path="edit-category/:id" element={<EditCategory />} />
 					</Route>
 				</Route>
 			</Routes>
