@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { CategoryContext } from "./CategoryProvider"
+import { CategoryContext } from "../categories/CategoryProvider"
 
 export const FilterCategory = ({ setFilteredPosts, posts }) => {
 	const { categories, getAllCategories } = useContext(CategoryContext)
