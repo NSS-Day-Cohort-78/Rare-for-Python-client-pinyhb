@@ -5,6 +5,7 @@ import { UserContext } from "../auth/UserProvider"
 import { ConfirmDelete } from "./ConfirmDelete"
 import "./post.css"
 import { ViewCommentsButton } from "../comments/ViewCommentsButton"
+import { AddCommentsButton } from "../comments/AddCommentsButton"
 
 export const PostDetails = () => {
 	const { getPostById, post } = useContext(PostContext)
@@ -43,7 +44,10 @@ export const PostDetails = () => {
 							{post.user?.username}
 						</p>
 					</div>
-					<ViewCommentsButton id={post.id} />
+					<div className="is-flex is-justify-content-space-between">
+						<ViewCommentsButton id={post.id} />
+						<AddCommentsButton id={post.id} />
+					</div>
 				</div>
 			</div>
 

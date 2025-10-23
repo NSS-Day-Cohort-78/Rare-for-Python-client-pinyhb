@@ -11,8 +11,19 @@ export const CommentsProvider = ({ children }) => {
 			.then(setComments)
 	}
 
+	const createComment = body => {
+		return fetch(`http://localhost:8088/comments`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		})
+	}
+
 	return (
-		<CommentsContext.Provider value={{ getAllComments, comments }}>
+		<CommentsContext.Provider
+			value={{ getAllComments, comments, createComment }}>
 			{children}
 		</CommentsContext.Provider>
 	)
