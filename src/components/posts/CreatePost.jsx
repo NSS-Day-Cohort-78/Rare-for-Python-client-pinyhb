@@ -33,7 +33,12 @@ export const CreatePost = () => {
                 }
 
                 addNewPost(newPost).then(res => {
-                    navigate("/postdetails")})
+                    if (res && res.id) {
+                        navigate(`/posts/${res.id}`)
+                    } else {
+                        navigate("posts/")
+                    }
+                })
             }
         else {
             console.log("fill out all fields!!!")
