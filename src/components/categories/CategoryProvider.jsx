@@ -22,9 +22,20 @@ export const CategoryProvider = ({ children }) => {
 		})
 	}
 
+	const deleteCategory = id => {
+		return fetch(`http://localhost:8088/categories/${id}`, {
+			method: "DELETE"
+		})
+	}
+
 	return (
 		<CategoryContext.Provider
-			value={{ categories, getAllCategories, createCategory }}>
+			value={{
+				categories,
+				getAllCategories,
+				createCategory,
+				deleteCategory
+			}}>
 			{children}
 		</CategoryContext.Provider>
 	)
