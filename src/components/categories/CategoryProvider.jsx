@@ -4,11 +4,18 @@ export const CategoryContext = createContext()
 
 export const CategoryProvider = ({ children }) => {
 	const [categories, setCategories] = useState([])
+	const [category, setCategory] = useState([])
 
 	const getAllCategories = () => {
 		fetch(`http://localhost:8088/categories`)
 			.then(res => res.json())
 			.then(setCategories)
+	}
+
+	const getCategoryById = id => {
+		fetch(`http://localhost:8088/categories${id}`)
+			.then(res => res.json())
+			.then(setCategory)
 	}
 
 	const createCategory = category => {
@@ -33,6 +40,7 @@ export const CategoryProvider = ({ children }) => {
 			value={{
 				categories,
 				getAllCategories,
+				getCategoryById,
 				createCategory,
 				deleteCategory
 			}}>

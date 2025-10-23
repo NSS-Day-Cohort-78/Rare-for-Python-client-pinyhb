@@ -55,7 +55,7 @@ export const NavBar = ({ token, setToken }) => {
 								User Profiles
 							</Link>
 							<Link to={`/categories`} className="navbar-item">
-								View Categories
+								Category Management
 							</Link>
 						</>
 					) : (
