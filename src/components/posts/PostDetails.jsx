@@ -46,8 +46,10 @@ export const PostDetails = () => {
 						</p>
 					</div>
 					<div className="is-flex is-justify-content-space-between">
-						<ViewCommentsButton id={post.id} />
-						<AddCommentsButton id={post.id} />
+						<div className="is-flex is-justify-content-space-between custom-flex-gap">
+							<AddCommentsButton id={post.id} />
+							<ViewCommentsButton id={post.id} />
+						</div>
 						<ViewPostReactions />
 					</div>
 				</div>
