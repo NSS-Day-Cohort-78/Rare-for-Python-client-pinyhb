@@ -19,6 +19,8 @@ import { AddCommentForm } from "../components/comments/AddCommentForm"
 import { EditCommentForm } from "../components/comments/EditCommentForm"
 import { ReactionsProvider } from "../components/reactions/ReactionsProvider"
 import { ReactionManager } from "../components/reactions/ReactionManager"
+import { TagManager } from "../components/tags/TagManager"
+import { TagsProvider } from "../components/tags/TagsProvider"
 
 export const ApplicationViews = ({ token, setToken }) => {
 	return (
@@ -35,13 +37,15 @@ export const ApplicationViews = ({ token, setToken }) => {
 						path="/"
 						element={
 							<PostProvider>
-								<ReactionsProvider>
-									<CommentsProvider>
-										<CategoryProvider>
-											<Outlet />
-										</CategoryProvider>
-									</CommentsProvider>
-								</ReactionsProvider>
+								<TagsProvider>
+									<ReactionsProvider>
+										<CommentsProvider>
+											<CategoryProvider>
+												<Outlet />
+											</CategoryProvider>
+										</CommentsProvider>
+									</ReactionsProvider>
+								</TagsProvider>
 							</PostProvider>
 						}>
 						<Route index element={<Posts />} />
@@ -76,6 +80,7 @@ export const ApplicationViews = ({ token, setToken }) => {
 							path="reaction-manager"
 							element={<ReactionManager />}
 						/>
+						<Route path="tags-manager" element={<TagManager />} />
 					</Route>
 				</Route>
 			</Routes>
