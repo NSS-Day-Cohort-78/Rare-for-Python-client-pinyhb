@@ -21,9 +21,15 @@ export const CommentsProvider = ({ children }) => {
 		})
 	}
 
+	const deleteComment = id => {
+		return fetch(`http://localhost:8088/comments/${id}`, {
+			method: "DELETE"
+		})
+	}
+
 	return (
 		<CommentsContext.Provider
-			value={{ getAllComments, comments, createComment }}>
+			value={{ getAllComments, comments, createComment, deleteComment }}>
 			{children}
 		</CommentsContext.Provider>
 	)

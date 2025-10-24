@@ -4,11 +4,12 @@ import { CommentsContext } from "./CommentsProvider"
 import { CommentsList } from "./CommentsList"
 import "./comment.css"
 
-export const Comments = () => {
+export const Comments = ({ token }) => {
 	const { id } = useParams()
 
 	const navigate = useNavigate()
 	const { getAllComments, comments } = useContext(CommentsContext)
+	
 	useEffect(() => {
 		getAllComments(id)
 	}, [])
@@ -22,7 +23,7 @@ export const Comments = () => {
 				Back to Post
 			</button>
 			{comments &&
-				comments.map(c => <CommentsList key={c.id} comment={c} />)}
+				comments.map(c => <CommentsList token={token} key={c.id} comment={c} />)}
 		</div>
 	)
 }
