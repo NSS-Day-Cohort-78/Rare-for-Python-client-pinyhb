@@ -6,6 +6,7 @@ import { ConfirmDelete } from "./ConfirmDelete"
 import "./post.css"
 import { ViewCommentsButton } from "../comments/ViewCommentsButton"
 import { AddCommentsButton } from "../comments/AddCommentsButton"
+import { ViewPostReactions } from "../reactions/ViewPostReactions"
 
 export const PostDetails = () => {
 	const { getPostById, post } = useContext(PostContext)
@@ -47,6 +48,7 @@ export const PostDetails = () => {
 					<div className="is-flex is-justify-content-space-between">
 						<ViewCommentsButton id={post.id} />
 						<AddCommentsButton id={post.id} />
+						<ViewPostReactions />
 					</div>
 				</div>
 			</div>

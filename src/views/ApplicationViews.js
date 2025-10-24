@@ -17,6 +17,7 @@ import { Comments } from "../components/comments/Comments"
 import { CommentsProvider } from "../components/comments/CommentsProvider"
 import { AddCommentForm } from "../components/comments/AddCommentForm"
 import { EditCommentForm } from "../components/comments/EditCommentForm"
+import { ReactionsProvider } from "../components/reactions/ReactionsProvider"
 
 export const ApplicationViews = ({ token, setToken }) => {
 	return (
@@ -33,11 +34,13 @@ export const ApplicationViews = ({ token, setToken }) => {
 						path="/"
 						element={
 							<PostProvider>
-								<CommentsProvider>
-									<CategoryProvider>
-										<Outlet />
-									</CategoryProvider>
-								</CommentsProvider>
+								<ReactionsProvider>
+									<CommentsProvider>
+										<CategoryProvider>
+											<Outlet />
+										</CategoryProvider>
+									</CommentsProvider>
+								</ReactionsProvider>
 							</PostProvider>
 						}>
 						<Route index element={<Posts />} />
@@ -64,7 +67,10 @@ export const ApplicationViews = ({ token, setToken }) => {
 						/>
 						<Route path="categories" element={<Categories />} />
 						<Route path="add-category" element={<AddCategory />} />
-            <Route path="edit-category/:id" element={<EditCategory />} />
+						<Route
+							path="edit-category/:id"
+							element={<EditCategory />}
+						/>
 					</Route>
 				</Route>
 			</Routes>
