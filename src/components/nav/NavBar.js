@@ -62,6 +62,9 @@ export const NavBar = ({ token, setToken }) => {
 								className="navbar-item">
 								Reaction Management
 							</Link>
+							<Link to={`/tags-manager`} className="navbar-item">
+								Tags Management
+							</Link>
 						</>
 					) : (
 						""
