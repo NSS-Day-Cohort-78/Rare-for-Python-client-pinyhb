@@ -18,6 +18,7 @@ import { CommentsProvider } from "../components/comments/CommentsProvider"
 import { AddCommentForm } from "../components/comments/AddCommentForm"
 import { EditCommentForm } from "../components/comments/EditCommentForm"
 import { ReactionsProvider } from "../components/reactions/ReactionsProvider"
+import { ReactionManager } from "../components/reactions/ReactionManager"
 
 export const ApplicationViews = ({ token, setToken }) => {
 	return (
@@ -70,6 +71,10 @@ export const ApplicationViews = ({ token, setToken }) => {
 						<Route
 							path="edit-category/:id"
 							element={<EditCategory />}
+						/>
+						<Route
+							path="reaction-manager"
+							element={<ReactionManager />}
 						/>
 					</Route>
 				</Route>
