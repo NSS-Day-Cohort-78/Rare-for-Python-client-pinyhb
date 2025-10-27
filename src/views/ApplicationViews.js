@@ -21,6 +21,7 @@ import { ReactionsProvider } from "../components/reactions/ReactionsProvider"
 import { ReactionManager } from "../components/reactions/ReactionManager"
 import { TagManager } from "../components/tags/TagManager"
 import { TagsProvider } from "../components/tags/TagsProvider"
+import { EditTagForm } from "../components/tags/EditTagForm"
 
 export const ApplicationViews = ({ token, setToken }) => {
 	return (
@@ -80,7 +81,10 @@ export const ApplicationViews = ({ token, setToken }) => {
 							path="reaction-manager"
 							element={<ReactionManager />}
 						/>
-						<Route path="tags-manager" element={<TagManager />} />
+						<Route path="tags-manager" element={<Outlet />}>
+							<Route index element={<TagManager />} />
+							<Route path=":id/edit" element={<EditTagForm />} />
+						</Route>
 					</Route>
 				</Route>
 			</Routes>

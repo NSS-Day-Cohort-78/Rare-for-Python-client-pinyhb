@@ -4,6 +4,7 @@ export const TagsContext = createContext()
 
 export const TagsProvider = ({ children }) => {
 	const [tags, setTags] = useState([])
+	const [tag, setTag] = useState({})
 
 	const getAllTags = () => {
 		fetch(`http://localhost:8088/tags`)
@@ -11,8 +12,13 @@ export const TagsProvider = ({ children }) => {
 			.then(setTags)
 	}
 
+	const getTagById = id => {
+		fetch(`http://localhost:8088/tags/${id}`)
+			.then(res => res.json())
+			.then(setTag)
+	}
 	return (
-		<TagsContext.Provider value={{ tags, getAllTags }}>
+		<TagsContext.Provider value={{ tags, getAllTags, tag, getTagById }}>
 			{children}
 		</TagsContext.Provider>
 	)
