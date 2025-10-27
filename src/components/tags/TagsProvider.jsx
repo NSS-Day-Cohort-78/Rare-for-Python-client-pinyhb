@@ -17,8 +17,19 @@ export const TagsProvider = ({ children }) => {
 			.then(res => res.json())
 			.then(setTag)
 	}
+
+	const updateTag = (id, body) => {
+		return fetch(`http://localhost:8088/tags/${id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		})
+	}
 	return (
-		<TagsContext.Provider value={{ tags, getAllTags, tag, getTagById }}>
+		<TagsContext.Provider
+			value={{ tags, getAllTags, tag, setTag, getTagById, updateTag }}>
 			{children}
 		</TagsContext.Provider>
 	)
