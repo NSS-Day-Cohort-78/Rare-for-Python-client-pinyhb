@@ -27,9 +27,23 @@ export const TagsProvider = ({ children }) => {
 			body: JSON.stringify(body)
 		})
 	}
+
+	const deleteTag = id => {
+		return fetch(`http://localhost:8088/tags/${id}`, {
+			method: "DELETE"
+		})
+	}
 	return (
 		<TagsContext.Provider
-			value={{ tags, getAllTags, tag, setTag, getTagById, updateTag }}>
+			value={{
+				tags,
+				getAllTags,
+				tag,
+				setTag,
+				getTagById,
+				updateTag,
+				deleteTag
+			}}>
 			{children}
 		</TagsContext.Provider>
 	)
