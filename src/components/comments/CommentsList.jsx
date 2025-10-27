@@ -7,11 +7,11 @@ export const CommentsList = ({ comment }) => {
 	const navigate = useNavigate()
 	const { token } = useContext(UserContext)
 	const { id } = useParams()
-  const currentUser = parseInt(token)
+	const currentUser = parseInt(token)
 	const [commentObj, setCommentObj] = useState({})
 	const [modal, setModal] = useState(false)
-  
-  useEffect(() => {
+
+	useEffect(() => {
 		setCommentObj(comment)
 	}, [])
 	return (
@@ -22,17 +22,24 @@ export const CommentsList = ({ comment }) => {
 				<p>{comment.author.username}</p>
 				{/* <div className="is-justify-content-right">{currentUser === commentObj.author?.author_id ? <DeleteCommentButton id={comment.id}/> : ""}
 				</div> */}
-				{parseInt(token) === comment.author?.author_id ? (
-				<div className="is-flex is-align-items-center is-justify-content-center">
-					<i
-						onClick={() => setModal(true)}
-						className="fa-solid fa-trash is-clickable"></i>
-				</div>
-			) : (
-				""
-			)}
+				{parseInt(token) === comment.author?.id ? (
+					<div className="is-flex is-align-items-center is-justify-content-center">
+						<i
+							onClick={() => setModal(true)}
+							className="fa-solid fa-trash is-clickable"></i>
+					</div>
+				) : (
+					""
+				)}
 
-			{modal ? <DeleteCommentButton setModal={setModal} comment={commentObj} /> : ""}
+				{modal ? (
+					<DeleteCommentButton
+						setModal={setModal}
+						comment={commentObj}
+					/>
+				) : (
+					""
+				)}
 			</div>
 			<p>{comment.author.username}</p>
 			{parseInt(token) === comment.author.id ? (
