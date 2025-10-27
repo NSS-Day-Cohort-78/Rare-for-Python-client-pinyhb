@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react"
 import { TagsContext } from "./TagsProvider"
 
-export const DeleteTagButton = ({ id, modal, setModal }) => {
+export const DeleteTagButton = ({ id, setModal }) => {
 	const { deleteTag, getAllTags } = useContext(TagsContext)
 	return (
 		<div>
