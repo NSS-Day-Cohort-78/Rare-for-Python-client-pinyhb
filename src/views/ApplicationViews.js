@@ -23,6 +23,7 @@ import { TagManager } from "../components/tags/TagManager"
 import { TagsProvider } from "../components/tags/TagsProvider"
 import { EditTagForm } from "../components/tags/EditTagForm"
 import { CreateTagForm } from "../components/tags/CreateTagForm"
+import { PostTags } from "../components/tags/PostTags"
 
 export const ApplicationViews = ({ token, setToken }) => {
 	return (
@@ -52,7 +53,7 @@ export const ApplicationViews = ({ token, setToken }) => {
 						}>
 						<Route index element={<Posts />} />
 						<Route path="createpost" element={<CreatePost />} />
-						{<Route path="postdetails" />}
+
 						<Route path="posts/:id" element={<Outlet />}>
 							<Route index element={<PostDetails />} />
 							<Route
@@ -67,6 +68,7 @@ export const ApplicationViews = ({ token, setToken }) => {
 								path="comment/:commentId/edit"
 								element={<EditCommentForm />}
 							/>
+							<Route path="tags" element={<PostTags />} />
 						</Route>
 						<Route path="user-posts/:user" element={<Posts />} />
 						<Route path="edit-post/:id" element={<EditPost />} />
