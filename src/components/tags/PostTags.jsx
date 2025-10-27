@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { TagsContext } from "./TagsProvider"
 import { TagsCheckbox } from "./TagsCheckbox"
 
 export const PostTags = () => {
 	const { id } = useParams()
-	const { getAllTags, tags, postTags, getPostTags } = useContext(TagsContext)
+	const { getAllTags, tags, postTags, getPostTags, addPostTag } =
+		useContext(TagsContext)
 	const [isChecked, setIsChecked] = useState([])
-	const [checked, setChecked] = useState(false)
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		getAllTags()
@@ -18,8 +19,27 @@ export const PostTags = () => {
 		setIsChecked([...postTags])
 	}, [postTags])
 
-	const handleSave = e => {
+	const handleAddPostTag = async () => {
+		// tags to add filters to get tags not already in DB
+		const tagsToAdd = []
+		for (const tag of isChecked) {
+			const found = postTags.find(p => p.tag_id === tag.tag_id)
+
+			if (!found) {
+				tagsToAdd.push(tag)
+			}
+		}
+		if (tagsToAdd.length > 0) {
+			for (const tag of tagsToAdd) {
+				await addPostTag(tag)
+			}
+		}
+	}
+
+	const handleSave = async e => {
 		e.preventDefault()
+		await handleAddPostTag()
+		navigate(`/posts/${id}`)
 	}
 	return (
 		<div className="container">
@@ -35,13 +55,13 @@ export const PostTags = () => {
 								setIsChecked={setIsChecked}
 								postTags={postTags}
 								postId={id}
-								checked={checked}
-								setChecked={setChecked}
 							/>
 						)
 					})}
 				</fieldset>
-				<button className="button">Save</button>
+				<button className="button" onClick={handleSave}>
+					Save
+				</button>
 			</form>
 		</div>
 	)
