@@ -3,7 +3,7 @@ import { UserContext } from "../auth/UserProvider"
 import { useNavigate, useParams } from "react-router-dom"
 import { DeleteCommentButton } from "./DeleteCommentButton"
 
-export const CommentsList = ({ comment, token }) => {
+export const CommentsList = ({ comment }) => {
 	const navigate = useNavigate()
 	const { token } = useContext(UserContext)
 	const { id } = useParams()
