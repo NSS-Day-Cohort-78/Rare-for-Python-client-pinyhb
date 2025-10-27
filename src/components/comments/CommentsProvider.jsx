@@ -21,6 +21,12 @@ export const CommentsProvider = ({ children }) => {
 		})
 	}
 
+	const deleteComment = id => {
+		return fetch(`http://localhost:8088/comments/${id}`, {
+			method: "DELETE"
+		})
+	}
+  
 	// edit comment
 	const editComment = (body, id) => {
 		return fetch(`http://localhost:8088/comments/${id}`, {
@@ -46,7 +52,8 @@ export const CommentsProvider = ({ children }) => {
 				comments,
 				createComment,
 				getCommentById,
-				editComment
+				editComment,
+        deleteComment
 			}}>
 			{children}
 		</CommentsContext.Provider>
