@@ -1,6 +1,8 @@
 import React, { useState } from "react"
 import { EditTagButton } from "./EditTagButton"
 import { DeleteTagButton } from "./DeleteTagButton"
+import { DeleteTagShowModal } from "./DeleteTagShowModal"
+import { CreateTagButton } from "./CreateTagButton"
 
 export const TagsList = ({ tag }) => {
 	const [modal, setModal] = useState(false)
@@ -13,11 +15,8 @@ export const TagsList = ({ tag }) => {
 				) : (
 					<>
 						<EditTagButton id={tag.id} />
-						<button
-							className=" ml-5 button"
-							onClick={() => setModal(true)}>
-							Delete
-						</button>
+						<DeleteTagShowModal setModal={setModal} />
+						<CreateTagButton />
 					</>
 				)}
 			</div>

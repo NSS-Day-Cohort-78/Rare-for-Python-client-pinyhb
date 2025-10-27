@@ -22,6 +22,7 @@ import { ReactionManager } from "../components/reactions/ReactionManager"
 import { TagManager } from "../components/tags/TagManager"
 import { TagsProvider } from "../components/tags/TagsProvider"
 import { EditTagForm } from "../components/tags/EditTagForm"
+import { CreateTagForm } from "../components/tags/CreateTagForm"
 
 export const ApplicationViews = ({ token, setToken }) => {
 	return (
@@ -54,7 +55,10 @@ export const ApplicationViews = ({ token, setToken }) => {
 						{<Route path="postdetails" />}
 						<Route path="posts/:id" element={<Outlet />}>
 							<Route index element={<PostDetails />} />
-							<Route path="comments" element={<Comments token={token} />}  />
+							<Route
+								path="comments"
+								element={<Comments token={token} />}
+							/>
 							<Route
 								path="comment/add"
 								element={<AddCommentForm />}
@@ -84,6 +88,7 @@ export const ApplicationViews = ({ token, setToken }) => {
 						<Route path="tags-manager" element={<Outlet />}>
 							<Route index element={<TagManager />} />
 							<Route path=":id/edit" element={<EditTagForm />} />
+							<Route path="create" element={<CreateTagForm />} />
 						</Route>
 					</Route>
 				</Route>
