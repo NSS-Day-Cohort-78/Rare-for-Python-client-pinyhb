@@ -42,9 +42,9 @@ export const PostDetails = () => {
 						</div>
 					</div>
 					<div className="card-footer">
-						<p className="card-footer-item">
-							{post.user?.username}
-						</p>
+							<p className="card-footer-item">
+								{post.user?.username}
+							</p>
 					</div>
 					<div className="is-flex is-justify-content-space-between">
 						<div className="is-flex is-justify-content-space-between custom-flex-gap">

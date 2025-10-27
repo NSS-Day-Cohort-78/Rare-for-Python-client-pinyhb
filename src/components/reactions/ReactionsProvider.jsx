@@ -7,9 +7,19 @@ export const ReactionsProvider = ({ children }) => {
 	const [reactions, setReactions] = useState([])
 
 	const getReactionsByPostId = id => {
-		fetch(`http://localhost:8088/post-reactions/${id}`)
+		fetch(`http://localhost:8088/post-reaction/${id}`)
 			.then(res => res.json())
 			.then(setPostReactions)
+	}
+
+	const addPostReaction = postReaction => {
+		return fetch(`http://localhost:8088/post-reaction`, {
+			method: "POST",
+			header: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(postReaction)
+		})
 	}
 
 	const createReaction = body => {
@@ -23,7 +33,7 @@ export const ReactionsProvider = ({ children }) => {
 	}
 
 	const getReactions = () => {
-		return fetch(`http://localhost:8088/reactions`)
+		return fetch(`http://localhost:8088/post-reaction`)
 			.then(res => res.json())
 			.then(setReactions)
 	}
@@ -35,7 +45,8 @@ export const ReactionsProvider = ({ children }) => {
 				getReactionsByPostId,
 				createReaction,
 				getReactions,
-				reactions
+				reactions,
+				addPostReaction
 			}}>
 			{children}
 		</ReactionsContext.Provider>
