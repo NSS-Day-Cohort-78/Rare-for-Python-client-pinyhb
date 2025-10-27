@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
+import { UserContext } from "../auth/UserProvider"
+import { useNavigate, useParams } from "react-router-dom"
 import { DeleteCommentButton } from "./DeleteCommentButton"
 
 export const CommentsList = ({ comment, token }) => {
-	const currentUser = parseInt(token)
+	const navigate = useNavigate()
+	const { token } = useContext(UserContext)
+	const { id } = useParams()
+  const currentUser = parseInt(token)
 	const [commentObj, setCommentObj] = useState({})
 	const [modal, setModal] = useState(false)
-
-	useEffect(() => {
+  
+  useEffect(() => {
 		setCommentObj(comment)
 	}, [])
-
 	return (
 		<div className=" p-5 comment container is-flex is-flex-direction-column is-justify-content-center is-align-items-center">
 			<h2>{comment.category.label}</h2>
@@ -28,9 +32,20 @@ export const CommentsList = ({ comment, token }) => {
 				""
 			)}
 
-
 			{modal ? <DeleteCommentButton setModal={setModal} comment={commentObj} /> : ""}
 			</div>
+			<p>{comment.author.username}</p>
+			{parseInt(token) === comment.author.id ? (
+				<button
+					onClick={() =>
+						navigate(`/posts/${id}/comment/${comment.id}/edit`)
+					}
+					className="button">
+					edit
+				</button>
+			) : (
+				""
+			)}
 		</div>
 	)
 }

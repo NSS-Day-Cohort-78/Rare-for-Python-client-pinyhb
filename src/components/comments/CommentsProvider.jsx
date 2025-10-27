@@ -26,10 +26,35 @@ export const CommentsProvider = ({ children }) => {
 			method: "DELETE"
 		})
 	}
+  
+	// edit comment
+	const editComment = (body, id) => {
+		return fetch(`http://localhost:8088/comments/${id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		})
+	}
+
+	// get comment by id
+	const getCommentById = id => {
+		return fetch(`http://localhost:8088/comments/${id}`).then(res =>
+			res.json()
+		)
+	}
 
 	return (
 		<CommentsContext.Provider
-			value={{ getAllComments, comments, createComment, deleteComment }}>
+			value={{
+				getAllComments,
+				comments,
+				createComment,
+				getCommentById,
+				editComment,
+        deleteComment
+			}}>
 			{children}
 		</CommentsContext.Provider>
 	)

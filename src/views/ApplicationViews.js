@@ -16,6 +16,11 @@ import { EditCategory } from "../components/categories/EditCategory"
 import { Comments } from "../components/comments/Comments"
 import { CommentsProvider } from "../components/comments/CommentsProvider"
 import { AddCommentForm } from "../components/comments/AddCommentForm"
+import { EditCommentForm } from "../components/comments/EditCommentForm"
+import { ReactionsProvider } from "../components/reactions/ReactionsProvider"
+import { ReactionManager } from "../components/reactions/ReactionManager"
+import { TagManager } from "../components/tags/TagManager"
+import { TagsProvider } from "../components/tags/TagsProvider"
 
 export const ApplicationViews = ({ token, setToken }) => {
 	return (
@@ -32,11 +37,15 @@ export const ApplicationViews = ({ token, setToken }) => {
 						path="/"
 						element={
 							<PostProvider>
-								<CommentsProvider>
-									<CategoryProvider>
-										<Outlet />
-									</CategoryProvider>
-								</CommentsProvider>
+								<TagsProvider>
+									<ReactionsProvider>
+										<CommentsProvider>
+											<CategoryProvider>
+												<Outlet />
+											</CategoryProvider>
+										</CommentsProvider>
+									</ReactionsProvider>
+								</TagsProvider>
 							</PostProvider>
 						}>
 						<Route index element={<Posts />} />
@@ -49,6 +58,10 @@ export const ApplicationViews = ({ token, setToken }) => {
 								path="comment/add"
 								element={<AddCommentForm />}
 							/>
+							<Route
+								path="comment/:commentId/edit"
+								element={<EditCommentForm />}
+							/>
 						</Route>
 						<Route path="user-posts/:user" element={<Posts />} />
 						<Route path="edit-post/:id" element={<EditPost />} />
@@ -59,7 +72,15 @@ export const ApplicationViews = ({ token, setToken }) => {
 						/>
 						<Route path="categories" element={<Categories />} />
 						<Route path="add-category" element={<AddCategory />} />
-            <Route path="edit-category/:id" element={<EditCategory />} />
+						<Route
+							path="edit-category/:id"
+							element={<EditCategory />}
+						/>
+						<Route
+							path="reaction-manager"
+							element={<ReactionManager />}
+						/>
+						<Route path="tags-manager" element={<TagManager />} />
 					</Route>
 				</Route>
 			</Routes>
