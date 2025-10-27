@@ -49,7 +49,7 @@ export const ApplicationViews = ({ token, setToken }) => {
 							</PostProvider>
 						}>
 						<Route index element={<Posts />} />
-						<Route path="createpost" element={<CreatePost />} />
+						<Route path="create-post" element={<CreatePost />} />
 						{<Route path="postdetails" />}
 						<Route path="posts/:id" element={<Outlet />}>
 							<Route index element={<PostDetails />} />
