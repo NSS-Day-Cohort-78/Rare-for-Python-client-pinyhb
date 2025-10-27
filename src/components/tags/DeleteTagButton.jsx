@@ -1,25 +1,20 @@
 import React, { useContext, useState } from "react"
 import { TagsContext } from "./TagsProvider"
 
-export const DeleteTagButton = ({ id }) => {
-	const [modal, setModal] = useState(false)
-	const { deleteTag } = useContext(TagsContext)
+export const DeleteTagButton = ({ id, modal, setModal }) => {
+	const { deleteTag, getAllTags } = useContext(TagsContext)
 	return (
 		<div>
-			{modal ? (
-				<div>
-					<button className="button" onClick={() => deleteTag(id)}>
-						Confirm
-					</button>
-					<button className="button" onClick={() => setModal(false)}>
-						Cancel
-					</button>
-				</div>
-			) : (
-				<button className="button" onClick={() => setModal(true)}>
-					Delete
+			<div className="is-flex">
+				<button
+					className="button"
+					onClick={() => deleteTag(id).then(() => getAllTags())}>
+					Confirm
 				</button>
-			)}
+				<button className="ml-5 button" onClick={() => setModal(false)}>
+					Cancel
+				</button>
+			</div>
 		</div>
 	)
 }

@@ -8,7 +8,8 @@ export const DeleteCommentButton = ({ comment, setModal }) => {
 	// const navigate = useNavigate()
 	const { id } = useParams()
 
-	const handleDelete = () => deleteComment(comment.id)
+	const handleDelete = () =>
+		deleteComment(comment.id).then(() => getAllComments(id))
 
 	useEffect(() => {
 		getAllComments(id)
