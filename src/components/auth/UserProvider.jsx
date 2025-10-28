@@ -20,6 +20,16 @@ export const UserProvider = ({ children }) => {
 			.then(setUser)
 	}
 
+	const subscribeToUser = subscription => {
+		return fetch(`http://localhost:8088/subscriptions`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(subscription)
+		})
+	}
+
 	return (
 		<UserContext.Provider
 			value={{
@@ -28,7 +38,8 @@ export const UserProvider = ({ children }) => {
 				users,
 				getUsers,
 				user,
-				getUserById
+				getUserById,
+				subscribeToUser
 			}}>
 			{children}
 		</UserContext.Provider>
