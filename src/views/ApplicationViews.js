@@ -21,6 +21,9 @@ import { ReactionsProvider } from "../components/reactions/ReactionsProvider"
 import { ReactionManager } from "../components/reactions/ReactionManager"
 import { TagManager } from "../components/tags/TagManager"
 import { TagsProvider } from "../components/tags/TagsProvider"
+import { EditTagForm } from "../components/tags/EditTagForm"
+import { CreateTagForm } from "../components/tags/CreateTagForm"
+import { PostTags } from "../components/tags/PostTags"
 
 export const ApplicationViews = ({ token, setToken }) => {
 	return (
@@ -49,11 +52,14 @@ export const ApplicationViews = ({ token, setToken }) => {
 							</PostProvider>
 						}>
 						<Route index element={<Posts />} />
-						<Route path="createpost" element={<CreatePost />} />
+						<Route path="create-post" element={<CreatePost />} />
 						{<Route path="postdetails" />}
 						<Route path="posts/:id" element={<Outlet />}>
 							<Route index element={<PostDetails />} />
-							<Route path="comments" element={<Comments token={token} />}  />
+							<Route
+								path="comments"
+								element={<Comments token={token} />}
+							/>
 							<Route
 								path="comment/add"
 								element={<AddCommentForm />}
@@ -62,6 +68,7 @@ export const ApplicationViews = ({ token, setToken }) => {
 								path="comment/:commentId/edit"
 								element={<EditCommentForm />}
 							/>
+							<Route path="tags" element={<PostTags />} />
 						</Route>
 						<Route path="user-posts/:user" element={<Posts />} />
 						<Route path="edit-post/:id" element={<EditPost />} />
@@ -80,7 +87,11 @@ export const ApplicationViews = ({ token, setToken }) => {
 							path="reaction-manager"
 							element={<ReactionManager />}
 						/>
-						<Route path="tags-manager" element={<TagManager />} />
+						<Route path="tags-manager" element={<Outlet />}>
+							<Route index element={<TagManager />} />
+							<Route path=":id/edit" element={<EditTagForm />} />
+							<Route path="create" element={<CreateTagForm />} />
+						</Route>
 					</Route>
 				</Route>
 			</Routes>

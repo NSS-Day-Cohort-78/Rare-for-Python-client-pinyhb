@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import { PostContext } from "./PostProvider"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { UserContext } from "../auth/UserProvider"
 import { ConfirmDelete } from "./ConfirmDelete"
 import "./post.css"
@@ -12,6 +12,7 @@ export const PostDetails = () => {
 	const { getPostById, post } = useContext(PostContext)
 	const { id } = useParams()
 	const { token } = useContext(UserContext)
+	const navigate = useNavigate()
 	const [modal, setModal] = useState(false)
 
 	useEffect(() => {
@@ -41,9 +42,9 @@ export const PostDetails = () => {
 						</div>
 					</div>
 					<div className="card-footer">
-						<p className="card-footer-item">
-							{post.user?.username}
-						</p>
+							<p className="card-footer-item">
+								{post.user?.username}
+							</p>
 					</div>
 					<div className="is-flex is-justify-content-space-between">
 						<div className="is-flex is-justify-content-space-between custom-flex-gap">
@@ -57,6 +58,11 @@ export const PostDetails = () => {
 
 			{parseInt(token) === post.user?.id ? (
 				<div className="is-flex is-align-items-center is-justify-content-center">
+					<button
+						className="button"
+						onClick={() => navigate(`/posts/${id}/tags`)}>
+						Manage Tags
+					</button>
 					<i
 						onClick={() => setModal(true)}
 						className="fa-solid fa-trash is-clickable"></i>

@@ -1,7 +1,7 @@
 import { useRef, React, useState, useEffect, useId } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllCategories } from "./PostProvider";
-import { addNewPost } from "../../managers/AuthManager";
+import { addNewPost } from "./PostProvider";
 
 export const CreatePost = () => {
     const [categories, setCategories] = useState([])

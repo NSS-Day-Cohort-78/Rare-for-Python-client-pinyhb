@@ -9,8 +9,8 @@ export const CommentsList = ({ comment }) => {
 	const { id } = useParams()
 	const [commentObj, setCommentObj] = useState({})
 	const [modal, setModal] = useState(false)
-  
-  useEffect(() => {
+
+	useEffect(() => {
 		setCommentObj(comment)
 	}, [])
 
@@ -20,17 +20,24 @@ export const CommentsList = ({ comment }) => {
 			<p>{comment.content}</p>
 			<div className="is-flex is-grouped is-flex-direction-row is-align-items-center">
 				<p>{comment.author.username}</p>
-				{parseInt(token) === comment.author?.author_id ? (
-				<div className="is-flex is-align-items-center is-justify-content-center">
-					<i
-						onClick={() => setModal(true)}
-						className="fa-solid fa-trash is-clickable"></i>
-				</div>
-			) : (
-				""
-			)}
+				{parseInt(token) === comment.author?.id ? (
+					<div className="is-flex is-align-items-center is-justify-content-center">
+						<i
+							onClick={() => setModal(true)}
+							className="fa-solid fa-trash is-clickable"></i>
+					</div>
+				) : (
+					""
+				)}
 
-			{modal ? <DeleteCommentButton setModal={setModal} comment={commentObj} /> : ""}
+				{modal ? (
+					<DeleteCommentButton
+						setModal={setModal}
+						comment={commentObj}
+					/>
+				) : (
+					""
+				)}
 			</div>
 			<p>{comment.author.username}</p>
 			{parseInt(token) === comment.author.id ? (

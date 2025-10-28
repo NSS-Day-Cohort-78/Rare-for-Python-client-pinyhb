@@ -14,7 +14,7 @@ export const Posts = () => {
 	const navigate = useNavigate()
 
 	const navCreatePost = () => {
-		navigate("/createpost")
+		navigate("/create-post")
 	}
 	const { user } = useParams()
 

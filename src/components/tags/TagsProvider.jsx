@@ -4,6 +4,8 @@ export const TagsContext = createContext()
 
 export const TagsProvider = ({ children }) => {
 	const [tags, setTags] = useState([])
+	const [tag, setTag] = useState({})
+	const [postTags, setPostTags] = useState([])
 
 	const getAllTags = () => {
 		fetch(`http://localhost:8088/tags`)
@@ -11,8 +13,68 @@ export const TagsProvider = ({ children }) => {
 			.then(setTags)
 	}
 
+	const getTagById = id => {
+		fetch(`http://localhost:8088/tags/${id}`)
+			.then(res => res.json())
+			.then(setTag)
+	}
+
+	const updateTag = (id, body) => {
+		return fetch(`http://localhost:8088/tags/${id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		})
+	}
+
+	const deleteTag = id => {
+		return fetch(`http://localhost:8088/tags/${id}`, {
+			method: "DELETE"
+		})
+	}
+
+	const createTag = body => {
+		return fetch(`http://localhost:8088/tags`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		})
+	}
+
+	const getPostTags = id => {
+		fetch(`http://localhost:8088/post-tags/${id}`).then(res =>
+			res.json().then(setPostTags)
+		)
+	}
+
+	const addPostTag = body => {
+		return fetch(`http://localhost:8088/post-tags`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		})
+	}
 	return (
-		<TagsContext.Provider value={{ tags, getAllTags }}>
+		<TagsContext.Provider
+			value={{
+				tags,
+				getAllTags,
+				tag,
+				setTag,
+				getTagById,
+				updateTag,
+				deleteTag,
+				createTag,
+				getPostTags,
+				postTags,
+				addPostTag
+			}}>
 			{children}
 		</TagsContext.Provider>
 	)
