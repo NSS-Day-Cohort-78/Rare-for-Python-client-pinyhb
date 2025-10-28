@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { UserContext } from "../auth/UserProvider"
+import { SubscriptionContext } from "../subscriptions/SubscriptionProvider"
 
+// TODO: compare start and end date to show subscriptions
 export const UserDetails = ({ token }) => {
 	const { id } = useParams()
 	const { user, getUserById, subscribeToUser } = useContext(UserContext)
@@ -12,25 +14,31 @@ export const UserDetails = ({ token }) => {
 		created_on: new Date().toISOString()
 	})
 
+	const { getSubscriptions, subscriptions } = useContext(SubscriptionContext)
+
 	useEffect(() => {
 		getUserById(id)
 	}, [])
 
 	useEffect(() => {
-		fetch(`http://localhost:8088/subscriptions`)
-			.then(res => res.json())
-			.then(data => {
-				const isSubscribed = data.some(
-					sub =>
-						sub.follower_id === parseInt(token) &&
-						sub.author_id === parseInt(id)
-				)
-				setSubscribed(isSubscribed)
-			})
+		getSubscriptions()
 	}, [])
+
+	useEffect(() => {
+		const isSubscribed = subscriptions?.some(
+			sub =>
+				sub.follower_id === parseInt(token) &&
+				sub.author_id === parseInt(id)
+		)
+		setSubscribed(isSubscribed)
+	}, [subscriptions, id, token])
 
 	const handleSubscribe = () => {
 		subscribeToUser(subscription).then(() => setSubscribed(!subscribed))
+	}
+
+	const handleUnsubscribe = () => {
+		// add end date to db
 	}
 
 	return (
@@ -68,7 +76,11 @@ export const UserDetails = ({ token }) => {
 					<div className="card-content">
 						<div className="content is-flex is-justify-content-center">
 							{subscribed ? (
-								<button className="button">Subscribed</button>
+								<button
+									onClick={handleUnsubscribe}
+									className="button is-link">
+									Unsubscribe
+								</button>
 							) : (
 								<button
 									onClick={handleSubscribe}
