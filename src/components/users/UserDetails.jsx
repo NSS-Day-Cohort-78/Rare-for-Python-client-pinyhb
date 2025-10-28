@@ -5,8 +5,8 @@ import { UserContext } from "../auth/UserProvider"
 export const UserDetails = ({ token }) => {
 	const { id } = useParams()
 	const { user, getUserById, subscribeToUser } = useContext(UserContext)
-	const [ subscribed, setSubscribed ] = useState(false)
-	const [ subscription, setSubscription ] = useState({
+	const [subscribed, setSubscribed] = useState(false)
+	const [subscription, setSubscription] = useState({
 		follower_id: parseInt(token),
 		author_id: parseInt(id),
 		created_on: new Date().toISOString()
@@ -17,16 +17,20 @@ export const UserDetails = ({ token }) => {
 	}, [])
 
 	useEffect(() => {
-		fetch(`http://localhost:8088/subscriptions`).then(res => res.json()).then(data => {
-			const isSubscribed = data.some(sub => sub.follower_id === parseInt(token) && sub.author_id === parseInt(id))
-			setSubscribed(isSubscribed)
-		})
+		fetch(`http://localhost:8088/subscriptions`)
+			.then(res => res.json())
+			.then(data => {
+				const isSubscribed = data.some(
+					sub =>
+						sub.follower_id === parseInt(token) &&
+						sub.author_id === parseInt(id)
+				)
+				setSubscribed(isSubscribed)
+			})
 	}, [])
 
 	const handleSubscribe = () => {
-		subscribeToUser(subscription).then(() => 
-			setSubscribed(!subscribed)
-		)
+		subscribeToUser(subscription).then(() => setSubscribed(!subscribed))
 	}
 
 	return (
@@ -50,15 +54,33 @@ export const UserDetails = ({ token }) => {
 						<h2>{user.email}</h2>
 						<h2>{user.created_on}</h2>
 						<h2>Profile Type?</h2>
+						{token === id && user.subscribers > 0 ? (
+							<h2>
+								{user.subscribers} Subscriber
+								{user.subscribers > 1 ? "s" : ""}
+							</h2>
+						) : (
+							""
+						)}
 					</div>
-				</div>	
-				{token !== id ? 
+				</div>
+				{token !== id ? (
 					<div className="card-content">
 						<div className="content is-flex is-justify-content-center">
-							{subscribed ? <button className="button">Subscribed</button> : <button onClick={handleSubscribe} className="button is-link">Subscribe</button>}
+							{subscribed ? (
+								<button className="button">Subscribed</button>
+							) : (
+								<button
+									onClick={handleSubscribe}
+									className="button is-link">
+									Subscribe
+								</button>
+							)}
 						</div>
-					</div> 
-				: ""}
+					</div>
+				) : (
+					""
+				)}
 			</div>
 		</div>
 	)
