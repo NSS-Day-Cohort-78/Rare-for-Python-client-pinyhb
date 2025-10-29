@@ -5,6 +5,7 @@ import { SearchBar } from "./SearchBar"
 import { useNavigate } from "react-router-dom"
 import { useParams } from "react-router-dom"
 import { FilterCategory } from "./FilterCategory"
+import { TagsSearchBar } from "./TagsSearchBar"
 
 export const Posts = () => {
 	const { posts, getAllPosts } = useContext(PostContext)
@@ -33,7 +34,14 @@ export const Posts = () => {
 	return (
 		<>
 			<div className="container is-flex is-flex-direction-row is-justify-content-space-evenly p-5">
-				<SearchBar setFilteredPosts={setFilteredPosts} posts={posts} />
+				<div className="is-grouped is-flex is-flex-direction-row">
+					<p>Search by title:</p>
+					<SearchBar setFilteredPosts={setFilteredPosts} posts={posts} />
+				</div>
+				<div className="is-grouped is-flex is-flex-direction-row">
+					<p>Search by tag:</p>
+					<TagsSearchBar setFilteredPosts={setFilteredPosts} posts={posts} />
+				</div>
 				<FilterCategory
 					setFilteredPosts={setFilteredPosts}
 					posts={posts}

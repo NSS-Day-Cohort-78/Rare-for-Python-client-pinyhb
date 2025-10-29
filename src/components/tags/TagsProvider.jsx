@@ -60,6 +60,15 @@ export const TagsProvider = ({ children }) => {
 		)
 	}
 
+	const addPostTag = body => {
+		return fetch(`http://localhost:8088/post-tags`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		})
+	}
 	return (
 		<TagsContext.Provider
 			value={{
@@ -73,6 +82,7 @@ export const TagsProvider = ({ children }) => {
 				createTag,
 				getPostTags,
 				postTags,
+				addPostTag,
 				deletePostTags
 			}}>
 			{children}

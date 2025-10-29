@@ -75,7 +75,8 @@ export const ApplicationViews = ({ token, setToken }) => {
 						<Route path="users" element={<Users />} />
 						<Route
 							path="user-profile/:id"
-							element={<UserDetails />}
+							element={<UserDetails token={token} />}
+							
 						/>
 						<Route path="categories" element={<Categories />} />
 						<Route path="add-category" element={<AddCategory />} />
