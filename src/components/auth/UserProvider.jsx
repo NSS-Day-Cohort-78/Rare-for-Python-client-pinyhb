@@ -47,6 +47,16 @@ export const UserProvider = ({ children }) => {
 		})
 	}
 
+	const activateUser = (id, body) => {
+		return fetch(`http://localhost:8088/activate-user/${id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		})
+	}
+
 	return (
 		<UserContext.Provider
 			value={{
@@ -59,7 +69,8 @@ export const UserProvider = ({ children }) => {
 				subscribeToUser,
 				getCurrentUser,
 				currentUser,
-				updateUserInfo
+				updateUserInfo,
+				activateUser
 			}}>
 			{children}
 		</UserContext.Provider>
