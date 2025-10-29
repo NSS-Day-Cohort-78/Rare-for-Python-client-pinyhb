@@ -26,6 +26,7 @@ export const Users = ({ token }) => {
 							key={u.id}
 							user={u}
 							currentUser={currentUser}
+							users={users}
 						/>
 					))}
 				</tbody>
