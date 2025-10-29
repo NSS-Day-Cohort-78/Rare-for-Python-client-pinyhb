@@ -1,9 +1,40 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { ReactivateUserButton } from "./ReactivateUserButton"
+import { UserContext } from "../auth/UserProvider"
 
 export const UsersList = ({ user, currentUser }) => {
 	const navigate = useNavigate()
+	const [modal, setModal] = useState(false)
+	const { activateUser, getUsers } = React.useContext(UserContext)
+
+	const handleDeactivate = () => {
+		const data = {
+			active: false
+		}
+		activateUser(user.id, data).then(() => getUsers())
+		setModal(false)
+	}
+
+	const confirmDeactivate = () => {
+		return (
+			<div className="is-flex m-2">
+				<p>Are you sure you want to deactivate this user account?</p>
+				<div>
+					<button className="is-clickable mx-1" 
+					onClick={handleDeactivate}
+					>
+						Confirm
+					</button>
+					<button
+						className="is-clickable mx-1"
+						onClick={() => setModal(false)}>
+						Cancel
+					</button>
+				</div>
+			</div>
+		)
+	}
 
 	return (
 		<tr>
@@ -15,18 +46,27 @@ export const UsersList = ({ user, currentUser }) => {
 			<td>{user.username}</td>
 			<td>{user.admin ? "Admin" : "Author"}</td>
 			{currentUser.admin ? (
-				<>
-					<td className="is-flex is-justify-content-center">
+				<td>
+					<button
+						onClick={() => navigate(`/users/${user.id}/edit`)}
+						className="button mx-1">
+						Edit
+					</button>
+					{!user.admin && user.active ? (
 						<button
-							onClick={() => navigate(`/users/${user.id}/edit`)}
-							className="button">
-							Edit
+							onClick={() => setModal(true)}
+							className="button mx-1">
+							Deactivate
 						</button>
-					</td>
-					<td>
+					) : ("")}
+					{currentUser.admin && !user.active ? (
 						<ReactivateUserButton user={user} />
-					</td>
-				</>
+					) : (
+						""
+					)}
+
+					{modal ? confirmDeactivate() : ""}
+				</td>
 			) : (
 				""
 			)}
