@@ -1,12 +1,14 @@
-import { useRef } from "react"
+import { useContext, useRef } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import "./NavBar.css"
 import Logo from "./rare.jpeg"
+import { UserContext } from "../auth/UserProvider"
 
 export const NavBar = ({ token, setToken }) => {
 	const navigate = useNavigate()
 	const navbar = useRef()
 	const hamburger = useRef()
+	const { currentUser, getCurrentUser } = useContext(UserContext)
 
 	const showMobileNavbar = () => {
 		hamburger.current.classList.toggle("is-active")
@@ -51,20 +53,31 @@ export const NavBar = ({ token, setToken }) => {
 								className="navbar-item">
 								My Posts
 							</Link>
-							<Link to={`/users`} className="navbar-item">
-								User Profiles
-							</Link>
-							<Link to={`/categories`} className="navbar-item">
-								Category Management
-							</Link>
-							<Link
-								to={`/reaction-manager`}
-								className="navbar-item">
-								Reaction Management
-							</Link>
-							<Link to={`/tags-manager`} className="navbar-item">
-								Tags Management
-							</Link>
+							{currentUser && currentUser.admin ? (
+								<>
+									<Link to={`/users`} className="navbar-item">
+										User Profiles
+									</Link>
+
+									<Link
+										to={`/categories`}
+										className="navbar-item">
+										Category Management
+									</Link>
+									<Link
+										to={`/reaction-manager`}
+										className="navbar-item">
+										Reaction Management
+									</Link>
+									<Link
+										to={`/tags-manager`}
+										className="navbar-item">
+										Tags Management
+									</Link>
+								</>
+							) : (
+								""
+							)}
 						</>
 					) : (
 						""
