@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { ReactivateUserButton } from "./ReactivateUserButton"
 
-export const UsersList = ({ user, currentUser }) => {
+export const UsersList = ({ user, currentUser, users }) => {
 	const navigate = useNavigate()
 
 	return (
