@@ -3,11 +3,13 @@ import { UserContext } from "../auth/UserProvider"
 import { UsersList } from "./UsersList"
 import "./user.css"
 
-export const Users = () => {
-	const { users, getUsers } = useContext(UserContext)
+export const Users = ({ token }) => {
+	const { users, getUsers, getCurrentUser, currentUser } =
+		useContext(UserContext)
 
 	useEffect(() => {
 		getUsers()
+		getCurrentUser(token)
 	}, [])
 	return (
 		<div className="container">
@@ -15,7 +17,11 @@ export const Users = () => {
 			<table className="table is-bordered is-fullwidth">
 				<tbody>
 					{users?.map(u => (
-						<UsersList key={u.id} user={u} />
+						<UsersList
+							key={u.id}
+							user={u}
+							currentUser={currentUser}
+						/>
 					))}
 				</tbody>
 			</table>

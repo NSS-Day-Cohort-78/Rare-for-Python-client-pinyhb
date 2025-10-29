@@ -16,18 +16,9 @@ export const UserDetails = ({ token }) => {
 
 	useEffect(() => {
 		getUserById(id)
+
 		getSubscriptionByFollowerId(token, id).then(setSubscription)
 	}, [token, id])
-
-	/* 	useEffect(() => {
-		// TODO: compare start and end date to show subscriptions
-		const isSubscribed = subscriptions?.some(
-			sub =>
-				sub.follower_id === parseInt(token) &&
-				sub.author_id === parseInt(id)
-		)
-		setSubscribed(isSubscribed)
-	}, [subscriptions, id, token]) */
 
 	useEffect(() => {
 		if (subscription && subscription.ended_on === null) {

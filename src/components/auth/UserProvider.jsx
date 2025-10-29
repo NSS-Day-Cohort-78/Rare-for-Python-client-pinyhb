@@ -7,6 +7,7 @@ export const UserProvider = ({ children }) => {
 
 	const [users, setUsers] = useState([])
 	const [user, setUser] = useState({})
+	const [currentUser, setCurrentUser] = useState({})
 
 	const getUsers = () => {
 		fetch(`http://localhost:8088/users`)
@@ -30,6 +31,22 @@ export const UserProvider = ({ children }) => {
 		})
 	}
 
+	const getCurrentUser = id => {
+		fetch(`http://localhost:8088/users/${id}`)
+			.then(res => res.json())
+			.then(setCurrentUser)
+	}
+
+	const updateUserInfo = (id, body) => {
+		return fetch(`http://localhost:8088/users/${id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		})
+	}
+
 	return (
 		<UserContext.Provider
 			value={{
@@ -39,7 +56,10 @@ export const UserProvider = ({ children }) => {
 				getUsers,
 				user,
 				getUserById,
-				subscribeToUser
+				subscribeToUser,
+				getCurrentUser,
+				currentUser,
+				updateUserInfo
 			}}>
 			{children}
 		</UserContext.Provider>

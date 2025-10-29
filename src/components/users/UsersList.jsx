@@ -1,8 +1,9 @@
-import React from "react"
+import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-export const UsersList = ({ user }) => {
+export const UsersList = ({ user, currentUser }) => {
 	const navigate = useNavigate()
+
 	return (
 		<tr>
 			<td
@@ -12,6 +13,17 @@ export const UsersList = ({ user }) => {
 			</td>
 			<td>{user.username}</td>
 			<td>add user type</td>
+			{currentUser.admin ? (
+				<td className="is-flex is-justify-content-center">
+					<button
+						onClick={() => navigate(`/users/${user.id}/edit`)}
+						className="button">
+						Edit
+					</button>
+				</td>
+			) : (
+				""
+			)}
 		</tr>
 	)
 }
