@@ -12,6 +12,7 @@ export const Posts = () => {
 	const { posts, getAllPosts } = useContext(PostContext)
 	const { user } = useParams()
 	const [filteredPosts, setFilteredPosts] = useState()
+	const { getCurrentUser, currentUser, token } = useContext(UserContext)
 	const navigate = useNavigate()
 
 	const navCreatePost = () => {
@@ -20,7 +21,8 @@ export const Posts = () => {
 
 	useEffect(() => {
 		getAllPosts()
-	}, [])	
+		getCurrentUser(token)
+	}, [])
 
 	useEffect(() => {
 		if (user) {
@@ -36,11 +38,17 @@ export const Posts = () => {
 			<div className="container is-flex is-flex-direction-row is-justify-content-space-evenly p-5">
 				<div className="is-grouped is-flex is-flex-direction-row">
 					<p>Search by title:</p>
-					<SearchBar setFilteredPosts={setFilteredPosts} posts={posts} />
+					<SearchBar
+						setFilteredPosts={setFilteredPosts}
+						posts={posts}
+					/>
 				</div>
 				<div className="is-grouped is-flex is-flex-direction-row">
 					<p>Search by tag:</p>
-					<TagsSearchBar setFilteredPosts={setFilteredPosts} posts={posts} />
+					<TagsSearchBar
+						setFilteredPosts={setFilteredPosts}
+						posts={posts}
+					/>
 				</div>
 				<FilterCategory
 					setFilteredPosts={setFilteredPosts}
@@ -48,7 +56,11 @@ export const Posts = () => {
 				/>
 			</div>
 			<div className="buttons has-addons is-right">
-				<button className="button is-link is-focused" onClick={navCreatePost}>Create Post</button>
+				<button
+					className="button is-link is-focused"
+					onClick={navCreatePost}>
+					Create Post
+				</button>
 			</div>
 			<div className="p-5 container">
 				<table className=" table is-bordered is-fullwidth">
@@ -58,17 +70,35 @@ export const Posts = () => {
 							<th>Author</th>
 							<th>Category</th>
 							<th>Edit</th>
+							{currentUser && currentUser.admin ? (
+								<th>Approved</th>
+							) : (
+								""
+							)}
 						</tr>
 					</thead>
 					<tbody>
-						{filteredPosts &&
-							filteredPosts.map(post =>
-								post.approved ? (
-									<PostList key={post.id} post={post} />
-								) : (
-									""
-								)
-							)}
+						{currentUser && currentUser.admin
+							? filteredPosts &&
+							  filteredPosts.map(post => (
+									<PostList
+										key={post.id}
+										post={post}
+										currentUser={currentUser}
+									/>
+							  ))
+							: filteredPosts &&
+							  filteredPosts.map(post =>
+									post.approved ? (
+										<PostList
+											key={post.id}
+											post={post}
+											currentUser={currentUser}
+										/>
+									) : (
+										""
+									)
+							  )}
 					</tbody>
 				</table>
 			</div>
