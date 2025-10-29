@@ -5,10 +5,12 @@ import { TagsCheckbox } from "./TagsCheckbox"
 
 export const PostTags = () => {
 	const { id } = useParams()
-	const { getAllTags, tags, postTags, getPostTags, addPostTag } =
+	const { getAllTags, tags, postTags, getPostTags, addPostTag, deletePostTags } =
 		useContext(TagsContext)
 	const [isChecked, setIsChecked] = useState([])
+	const [checked, setChecked] = useState(false)
 	const navigate = useNavigate()
+
 
 	useEffect(() => {
 		getAllTags()
@@ -40,7 +42,23 @@ export const PostTags = () => {
 		e.preventDefault()
 		await handleAddPostTag()
 		navigate(`/posts/${id}`)
+
+		try {			
+			const checkedTagIds = isChecked.map(tag => tag.id)
+			const tagsToDelete = postTags.filter(tag => !checkedTagIds.includes(tag.id))
+
+			for (const tag of tagsToDelete) {
+				await deletePostTags(tag.id)
+			}
+			await getPostTags(id)
+
+			navigate(`/posts/${id}`)
+
+		} catch (error) {
+			console.error("Error deleting tags:", error)
+		}
 	}
+
 	return (
 		<div className="container">
 			<h1 className="title">tags</h1>

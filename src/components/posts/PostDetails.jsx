@@ -46,7 +46,7 @@ export const PostDetails = () => {
 								{post.user?.username}
 							</p>
 					</div>
-					<div className="is-flex is-justify-content-space-between">
+					<div className="is-flex-wrap-wrap is-justify-content-space-between">
 						<div className="is-flex is-justify-content-space-between custom-flex-gap">
 							<AddCommentsButton id={post.id} />
 							<ViewCommentsButton id={post.id} />
