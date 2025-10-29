@@ -21,7 +21,6 @@ export const Posts = () => {
 	useEffect(() => {
 		getAllPosts()
 	}, [])	
-	
 
 	useEffect(() => {
 		if (user) {

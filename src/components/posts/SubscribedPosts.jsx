@@ -15,7 +15,6 @@ export const SubscribedPosts = () => {
     const [filteredPosts, setFilteredPosts] = useState()
     const navigate = useNavigate()
     const [ subscribedTo, setSubscribedTo ] = useState([])
-    // const { posts } = useParams()
    
     const navCreatePost = () => {
         navigate("/create-post")
@@ -29,7 +28,7 @@ export const SubscribedPosts = () => {
         fetch(`http://localhost:8088/subscriptions`)
             .then(res => res.json())
             .then(data => {
-                const subscribedUsers = data.filter(sub => sub.follower_id === parseInt(token))
+                const subscribedUsers = data.filter(sub => sub.follower_id === parseInt(token) && (sub.ended_on === null || sub.ended_on < sub.created_on))
                 setSubscribedTo(subscribedUsers)
             }
         )
