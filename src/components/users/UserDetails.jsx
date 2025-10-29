@@ -76,7 +76,7 @@ export const UserDetails = ({ token }) => {
 						<h2>{user.username}</h2>
 						<h2>{user.email}</h2>
 						<h2>{user.created_on}</h2>
-						<h2>Profile Type?</h2>
+						<h2>{user.admin ? "Admin" : "Author"}</h2>
 						{token === id && user.subscribers > 0 ? (
 							<h2>
 								{user.subscribers} Subscriber
