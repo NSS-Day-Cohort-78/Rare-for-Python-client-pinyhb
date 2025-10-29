@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { TagsContext } from "./TagsProvider"
 import { TagsCheckbox } from "./TagsCheckbox"
 
 export const PostTags = () => {
 	const { id } = useParams()
-	const { getAllTags, tags, postTags, getPostTags } = useContext(TagsContext)
+	const { getAllTags, tags, postTags, getPostTags, deletePostTags } = useContext(TagsContext)
 	const [isChecked, setIsChecked] = useState([])
 	const [checked, setChecked] = useState(false)
+	const navigate = useNavigate()
+
 
 	useEffect(() => {
 		getAllTags()
@@ -18,9 +20,25 @@ export const PostTags = () => {
 		setIsChecked([...postTags])
 	}, [postTags])
 
-	const handleSave = e => {
+	const handleSave =  async (e)  => {
 		e.preventDefault()
+
+		try {			
+			const checkedTagIds = isChecked.map(tag => tag.id)
+			const tagsToDelete = postTags.filter(tag => !checkedTagIds.includes(tag.id))
+
+			for (const tag of tagsToDelete) {
+				await deletePostTags(tag.id)
+			}
+			await getPostTags(id)
+
+			navigate(`/posts/${id}`)
+
+		} catch (error) {
+			console.error("Error deleting tags:", error)
+		}
 	}
+
 	return (
 		<div className="container">
 			<h1 className="title">tags</h1>
@@ -41,7 +59,7 @@ export const PostTags = () => {
 						)
 					})}
 				</fieldset>
-				<button className="button">Save</button>
+				<button className="button" onClick={handleSave}>Save</button>
 			</form>
 		</div>
 	)

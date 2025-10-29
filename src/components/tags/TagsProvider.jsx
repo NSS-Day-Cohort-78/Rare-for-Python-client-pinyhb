@@ -46,10 +46,20 @@ export const TagsProvider = ({ children }) => {
 	}
 
 	const getPostTags = id => {
-		fetch(`http://localhost:8088/post-tags/${id}`).then(res =>
-			res.json().then(setPostTags)
+		fetch(`http://localhost:8088/post-tags/${id}`)
+			.then(res =>res.json())
+			.then(data => {
+				setPostTags(data) 
+				return data})
+	}
+
+	const deletePostTags = id => {
+		fetch(`http://localhost:8088/post-tags/${id}`, {
+			method: "DELETE"
+		}
 		)
 	}
+
 	return (
 		<TagsContext.Provider
 			value={{
@@ -62,7 +72,8 @@ export const TagsProvider = ({ children }) => {
 				deleteTag,
 				createTag,
 				getPostTags,
-				postTags
+				postTags,
+				deletePostTags
 			}}>
 			{children}
 		</TagsContext.Provider>

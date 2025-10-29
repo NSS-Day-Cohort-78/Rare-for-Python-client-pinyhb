@@ -32,6 +32,8 @@ export const TagsCheckbox = ({
 		const filtered = postTags.filter(p => p.tag_id === t.id)
 		if (filtered?.length > 0) {
 			setChecked(true)
+		} else {
+			setChecked(false)
 		}
 	}, [postTags, t.id])
 
