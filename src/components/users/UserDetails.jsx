@@ -1,32 +1,68 @@
 import React, { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { UserContext } from "../auth/UserProvider"
+import { SubscriptionContext } from "../subscriptions/SubscriptionProvider"
 
 export const UserDetails = ({ token }) => {
 	const { id } = useParams()
 	const { user, getUserById, subscribeToUser } = useContext(UserContext)
-	const [ subscribed, setSubscribed ] = useState(false)
-	const [ subscription, setSubscription ] = useState({
-		follower_id: parseInt(token),
-		author_id: parseInt(id),
-		created_on: new Date().toISOString()
-	})
+	const [subscribed, setSubscribed] = useState(false)
+	const [subscription, setSubscription] = useState(null)
+	const {
+		getSubscriptionByFollowerId,
+		unsubscribeToUser,
+		resubscribeToUser
+	} = useContext(SubscriptionContext)
 
 	useEffect(() => {
 		getUserById(id)
-	}, [])
+		getSubscriptionByFollowerId(token, id).then(setSubscription)
+	}, [token, id])
+
+	/* 	useEffect(() => {
+		// TODO: compare start and end date to show subscriptions
+		const isSubscribed = subscriptions?.some(
+			sub =>
+				sub.follower_id === parseInt(token) &&
+				sub.author_id === parseInt(id)
+		)
+		setSubscribed(isSubscribed)
+	}, [subscriptions, id, token]) */
 
 	useEffect(() => {
-		fetch(`http://localhost:8088/subscriptions`).then(res => res.json()).then(data => {
-			const isSubscribed = data.some(sub => sub.follower_id === parseInt(token) && sub.author_id === parseInt(id))
-			setSubscribed(isSubscribed)
-		})
-	}, [])
+		if (subscription && subscription.ended_on === null) {
+			setSubscribed(true)
+		} else if (
+			subscription &&
+			subscription.ended_on < subscription.created_on
+		) {
+			setSubscribed(true)
+		} else {
+			setSubscribed(false)
+		}
+	}, [subscription])
 
 	const handleSubscribe = () => {
-		subscribeToUser(subscription).then(() => 
-			setSubscribed(!subscribed)
-		)
+		if (subscription) {
+			resubscribeToUser(subscription.id, subscription)
+				.then(() => getSubscriptionByFollowerId(token, id))
+				.then(setSubscription)
+		} else {
+			const data = {
+				follower_id: parseInt(token),
+				author_id: parseInt(id)
+			}
+			subscribeToUser(data)
+				.then(() => getSubscriptionByFollowerId(token, id))
+				.then(setSubscription)
+		}
+	}
+
+	const handleUnsubscribe = () => {
+		// add end date to db
+		unsubscribeToUser(subscription.id, subscription)
+			.then(() => getSubscriptionByFollowerId(token, id))
+			.then(setSubscription)
 	}
 
 	return (
@@ -50,15 +86,37 @@ export const UserDetails = ({ token }) => {
 						<h2>{user.email}</h2>
 						<h2>{user.created_on}</h2>
 						<h2>Profile Type?</h2>
+						{token === id && user.subscribers > 0 ? (
+							<h2>
+								{user.subscribers} Subscriber
+								{user.subscribers > 1 ? "s" : ""}
+							</h2>
+						) : (
+							""
+						)}
 					</div>
-				</div>	
-				{token !== id ? 
+				</div>
+				{token !== id ? (
 					<div className="card-content">
 						<div className="content is-flex is-justify-content-center">
-							{subscribed ? <button className="button">Subscribed</button> : <button onClick={handleSubscribe} className="button is-link">Subscribe</button>}
+							{subscribed ? (
+								<button
+									onClick={handleUnsubscribe}
+									className="button is-link">
+									Unsubscribe
+								</button>
+							) : (
+								<button
+									onClick={handleSubscribe}
+									className="button is-link">
+									Subscribe
+								</button>
+							)}
 						</div>
-					</div> 
-				: ""}
+					</div>
+				) : (
+					""
+				)}
 			</div>
 		</div>
 	)

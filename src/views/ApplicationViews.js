@@ -25,6 +25,7 @@ import { EditTagForm } from "../components/tags/EditTagForm"
 import { CreateTagForm } from "../components/tags/CreateTagForm"
 import { PostTags } from "../components/tags/PostTags"
 import { SubscribedPosts } from "../components/posts/SubscribedPosts"
+import { SubscriptionProvider } from "../components/subscriptions/SubscriptionProvider"
 
 export const ApplicationViews = ({ token, setToken }) => {
 	return (
@@ -42,13 +43,15 @@ export const ApplicationViews = ({ token, setToken }) => {
 						element={
 							<PostProvider>
 								<TagsProvider>
-									<ReactionsProvider>
-										<CommentsProvider>
-											<CategoryProvider>
-												<Outlet />
-											</CategoryProvider>
-										</CommentsProvider>
-									</ReactionsProvider>
+									<SubscriptionProvider>
+										<ReactionsProvider>
+											<CommentsProvider>
+												<CategoryProvider>
+													<Outlet />
+												</CategoryProvider>
+											</CommentsProvider>
+										</ReactionsProvider>
+									</SubscriptionProvider>
 								</TagsProvider>
 							</PostProvider>
 						}>
@@ -78,7 +81,6 @@ export const ApplicationViews = ({ token, setToken }) => {
 						<Route
 							path="user-profile/:id"
 							element={<UserDetails token={token} />}
-							
 						/>
 						<Route path="categories" element={<Categories />} />
 						<Route path="add-category" element={<AddCategory />} />
