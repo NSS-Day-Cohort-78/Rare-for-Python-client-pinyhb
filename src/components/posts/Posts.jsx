@@ -6,21 +6,22 @@ import { useNavigate } from "react-router-dom"
 import { useParams } from "react-router-dom"
 import { FilterCategory } from "./FilterCategory"
 import { TagsSearchBar } from "./TagsSearchBar"
+import { UserContext } from "../auth/UserProvider"
 
 export const Posts = () => {
 	const { posts, getAllPosts } = useContext(PostContext)
-
+	const { user } = useParams()
 	const [filteredPosts, setFilteredPosts] = useState()
 	const navigate = useNavigate()
 
 	const navCreatePost = () => {
 		navigate("/create-post")
 	}
-	const { user } = useParams()
 
 	useEffect(() => {
 		getAllPosts()
-	}, [])
+	}, [])	
+	
 
 	useEffect(() => {
 		if (user) {

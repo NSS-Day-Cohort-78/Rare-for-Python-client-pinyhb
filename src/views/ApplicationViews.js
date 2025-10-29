@@ -24,6 +24,7 @@ import { TagsProvider } from "../components/tags/TagsProvider"
 import { EditTagForm } from "../components/tags/EditTagForm"
 import { CreateTagForm } from "../components/tags/CreateTagForm"
 import { PostTags } from "../components/tags/PostTags"
+import { SubscribedPosts } from "../components/posts/SubscribedPosts"
 
 export const ApplicationViews = ({ token, setToken }) => {
 	return (
@@ -51,7 +52,8 @@ export const ApplicationViews = ({ token, setToken }) => {
 								</TagsProvider>
 							</PostProvider>
 						}>
-						<Route index element={<Posts />} />
+						<Route index element={<SubscribedPosts token={token}/>} />
+						<Route path="posts" element={<Posts />} />
 						<Route path="create-post" element={<CreatePost />} />
 						{<Route path="postdetails" />}
 						<Route path="posts/:id" element={<Outlet />}>
