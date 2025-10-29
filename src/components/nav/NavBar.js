@@ -1,4 +1,4 @@
-import { useContext, useRef } from "react"
+import { useContext, useEffect, useRef } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import "./NavBar.css"
 import Logo from "./rare.jpeg"
@@ -14,6 +14,10 @@ export const NavBar = ({ token, setToken }) => {
 		hamburger.current.classList.toggle("is-active")
 		navbar.current.classList.toggle("is-active")
 	}
+
+	useEffect(() => {
+		getCurrentUser(token)
+	}, [token])
 
 	return (
 		<nav
