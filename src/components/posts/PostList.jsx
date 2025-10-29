@@ -39,7 +39,7 @@ export const PostList = ({ post, currentUser }) => {
 			<td>
 				<button onClick={navToEditPost}>Edit</button>
 			</td>
-			{currentUser.admin ? (
+			{currentUser?.admin ? (
 				<td className="is-flex is-justify-content-space-around is-align-items-center">
 					<input
 						type="checkbox"

@@ -7,10 +7,12 @@ export const EditUsersForm = () => {
 	const navigate = useNavigate()
 	const { id } = useParams()
 
-	const { getUserById, user, updateUserInfo } = useContext(UserContext)
+	const { users, getUsers, getUserById, user, updateUserInfo } =
+		useContext(UserContext)
 
 	useEffect(() => {
 		getUserById(id)
+		getUsers()
 	}, [])
 
 	useEffect(() => {
@@ -19,10 +21,19 @@ export const EditUsersForm = () => {
 
 	const handleSave = e => {
 		e.preventDefault()
-		const data = {
-			admin: checked
+
+		const found = users.filter(u => u.admin)
+		console.log(found)
+		if (found.length <= 1) {
+			window.alert(
+				"make someone else an admin before the User Profile can be changed"
+			)
+		} else {
+			const data = {
+				admin: checked
+			}
+			updateUserInfo(user.id, data).then(() => navigate(`/users`))
 		}
-		updateUserInfo(user.id, data).then(() => navigate(`/users`))
 	}
 	return (
 		<div className="container">
