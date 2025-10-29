@@ -24,7 +24,7 @@ export const EditUsersForm = () => {
 
 		const found = users.filter(u => u.admin)
 		console.log(found)
-		if (found.length <= 1) {
+		if (!checked && found.length <= 1) {
 			window.alert(
 				"make someone else an admin before the User Profile can be changed"
 			)
