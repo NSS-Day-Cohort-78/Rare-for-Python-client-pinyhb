@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { ReactivateUserButton } from "./ReactivateUserButton"
 
 export const UsersList = ({ user, currentUser }) => {
 	const navigate = useNavigate()
@@ -14,13 +15,18 @@ export const UsersList = ({ user, currentUser }) => {
 			<td>{user.username}</td>
 			<td>{user.admin ? "Admin" : "Author"}</td>
 			{currentUser.admin ? (
-				<td className="is-flex is-justify-content-center">
-					<button
-						onClick={() => navigate(`/users/${user.id}/edit`)}
-						className="button">
-						Edit
-					</button>
-				</td>
+				<>
+					<td className="is-flex is-justify-content-center">
+						<button
+							onClick={() => navigate(`/users/${user.id}/edit`)}
+							className="button">
+							Edit
+						</button>
+					</td>
+					<td>
+						<ReactivateUserButton user={user} />
+					</td>
+				</>
 			) : (
 				""
 			)}
