@@ -16,7 +16,7 @@ export const ReactionsProvider = ({ children }) => {
 		return fetch(`http://localhost:8088/post-reaction`, {
 			method: "POST",
 			header: {
-				"Content-Type": "application/json",
+				"Content-Type": "application/json"
 			},
 			body: JSON.stringify(postReaction)
 		})
@@ -38,6 +38,12 @@ export const ReactionsProvider = ({ children }) => {
 			.then(setReactions)
 	}
 
+	const deletePostReaction = id => {
+		return fetch(`http://localhost:8088/post-reaction/${id}`, {
+			method: "DELETE"
+		})
+	}
+
 	return (
 		<ReactionsContext.Provider
 			value={{
@@ -46,7 +52,8 @@ export const ReactionsProvider = ({ children }) => {
 				createReaction,
 				getReactions,
 				reactions,
-				addPostReaction
+				addPostReaction,
+				deletePostReaction
 			}}>
 			{children}
 		</ReactionsContext.Provider>
