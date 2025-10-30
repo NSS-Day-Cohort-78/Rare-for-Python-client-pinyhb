@@ -18,7 +18,7 @@ export const UsersList = ({ user, currentUser, users }) => {
 
 	const confirmDeactivate = () => {
 		const adminUsers = users.filter(u => u.admin && u.active)
-		if (adminUsers.length > 1) {
+		if (adminUsers.length > 2) {
 			return (
 				<div className="is-flex m-2">
 					<p>Are you sure you want to deactivate this user account?</p>
