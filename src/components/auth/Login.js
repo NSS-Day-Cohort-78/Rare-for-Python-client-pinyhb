@@ -1,6 +1,7 @@
-import { useRef, useState } from "react"
+import React, { useRef, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { loginUser } from "../../managers/AuthManager"
+import { UserContext } from "./UserProvider"
 
 export const Login = ({ setToken }) => {
   const username = useRef()
@@ -56,7 +57,7 @@ export const Login = ({ setToken }) => {
           </div>
         </div>
         {
-          isUnsuccessful ? <p className="help is-danger">Username or password not valid</p> : ''
+          isUnsuccessful ? <p className="help is-danger">User not found</p> : ''
         }
       </form>
     </section>

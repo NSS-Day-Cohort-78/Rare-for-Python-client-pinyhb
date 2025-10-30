@@ -93,7 +93,6 @@ export const Posts = () => {
 										<PostList
 											key={post.id}
 											post={post}
-											currentUser={currentUser}
 										/>
 									) : (
 										""
