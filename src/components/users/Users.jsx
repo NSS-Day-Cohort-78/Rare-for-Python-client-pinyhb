@@ -23,6 +23,7 @@ export const Users = ({ token }) => {
 				<tbody>
 					{filteredUsers?.map(u => (
 						<UsersList
+							token={token}
 							key={u.id}
 							user={u}
 							currentUser={currentUser}

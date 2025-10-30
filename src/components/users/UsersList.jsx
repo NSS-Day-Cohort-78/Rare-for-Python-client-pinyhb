@@ -1,18 +1,22 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { ReactivateUserButton } from "./ReactivateUserButton"
 import { UserContext } from "../auth/UserProvider"
 
-export const UsersList = ({ user, currentUser, users }) => {
+export const UsersList = ({ user, currentUser, users, token }) => {
 	const navigate = useNavigate()
 	const [modal, setModal] = useState(false)
-	const { activateUser, getUsers } = React.useContext(UserContext)
+	const { activateUser, getUsers, deactivateUser } = useContext(UserContext)
 
 	const handleDeactivate = () => {
-		const data = {
+		/* const data = {
 			active: false
+		} */
+		const data = {
+			user_id: user.id,
+			admin: token
 		}
-		activateUser(user.id, data).then(() => getUsers())
+		deactivateUser(user.id, data).then(() => getUsers())
 		setModal(false)
 	}
 
@@ -21,9 +25,9 @@ export const UsersList = ({ user, currentUser, users }) => {
 			<div className="is-flex m-2">
 				<p>Are you sure you want to deactivate this user account?</p>
 				<div>
-					<button className="is-clickable mx-1" 
-					onClick={handleDeactivate}
-					>
+					<button
+						className="is-clickable mx-1"
+						onClick={handleDeactivate}>
 						Confirm
 					</button>
 					<button
@@ -58,7 +62,9 @@ export const UsersList = ({ user, currentUser, users }) => {
 							className="button mx-1">
 							Deactivate
 						</button>
-					) : ("")}
+					) : (
+						""
+					)}
 					{currentUser.admin && !user.active ? (
 						<ReactivateUserButton user={user} />
 					) : (

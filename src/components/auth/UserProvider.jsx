@@ -58,6 +58,16 @@ export const UserProvider = ({ children }) => {
 		})
 	}
 
+	const deactivateUser = (id, body) => {
+		return fetch(`http://localhost:8088/deactivate-user/${id}`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		})
+	}
+
 	const getUserDemotionQueue = id => {
 		fetch(`http://localhost:8088/demotion/${id}`)
 			.then(res => res.json())
@@ -109,7 +119,8 @@ export const UserProvider = ({ children }) => {
 				updateUserDemotion,
 				deleteDemotionQueue,
 				addUserDemotion,
-				setUserDemotion
+				setUserDemotion,
+				deactivateUser
 			}}>
 			{children}
 		</UserContext.Provider>
