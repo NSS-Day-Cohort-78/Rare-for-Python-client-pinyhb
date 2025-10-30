@@ -16,7 +16,9 @@ export const NavBar = ({ token, setToken }) => {
 	}
 
 	useEffect(() => {
-		getCurrentUser(token)
+		if (token) {
+			getCurrentUser(token)
+		}
 	}, [token])
 
 	return (
