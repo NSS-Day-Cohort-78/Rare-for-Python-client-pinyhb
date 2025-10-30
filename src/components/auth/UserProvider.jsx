@@ -8,7 +8,7 @@ export const UserProvider = ({ children }) => {
 	const [users, setUsers] = useState([])
 	const [user, setUser] = useState({})
 	const [currentUser, setCurrentUser] = useState({})
-	const [userDemotion, setUserDemotion] = useState({})
+	const [userDemotion, setUserDemotion] = useState(undefined)
 
 	const getUsers = () => {
 		fetch(`http://localhost:8088/users`)
@@ -64,6 +64,16 @@ export const UserProvider = ({ children }) => {
 			.then(setUserDemotion)
 	}
 
+	const addUserDemotion = body => {
+		return fetch(`http://localhost:8088/demotion`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		})
+	}
+
 	const updateUserDemotion = (id, body) => {
 		return fetch(`http://localhost:8088/demotion/${id}`, {
 			method: "PUT",
@@ -71,6 +81,12 @@ export const UserProvider = ({ children }) => {
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify(body)
+		})
+	}
+
+	const deleteDemotionQueue = id => {
+		return fetch(`http://localhost:8088/demotion/${id}`, {
+			method: "DELETE"
 		})
 	}
 
@@ -90,7 +106,10 @@ export const UserProvider = ({ children }) => {
 				activateUser,
 				getUserDemotionQueue,
 				userDemotion,
-				updateUserDemotion
+				updateUserDemotion,
+				deleteDemotionQueue,
+				addUserDemotion,
+				setUserDemotion
 			}}>
 			{children}
 		</UserContext.Provider>
