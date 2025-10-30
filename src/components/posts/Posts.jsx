@@ -13,7 +13,7 @@ export const Posts = () => {
 	const { posts, getAllPosts } = useContext(PostContext)
 	const { id } = useParams()
 	const [filteredPosts, setFilteredPosts] = useState()
-	const [author, setAuthor] = useState({})
+	const [author, setAuthor] = useState(undefined)
 	const { getCurrentUser, currentUser, token, getUserById, user } =
 		useContext(UserContext)
 	const navigate = useNavigate()
@@ -25,8 +25,11 @@ export const Posts = () => {
 	useEffect(() => {
 		getAllPosts()
 		getCurrentUser(token)
-		getUserById(id)
 	}, [])
+
+	useEffect(() => {
+		getUserById(id)
+	}, [id])
 
 	useEffect(() => {
 		if (id) {
@@ -36,6 +39,7 @@ export const Posts = () => {
 			setAuthor(user)
 		} else {
 			setFilteredPosts(posts)
+			setAuthor(undefined)
 		}
 	}, [posts, id, user])
 
@@ -103,7 +107,7 @@ export const Posts = () => {
 							  )}
 					</tbody>
 				</table>
-				{user ? (
+				{id && author ? (
 					<button
 						onClick={() => navigate(`/user-profile/${author.id}`)}
 						className="button">
