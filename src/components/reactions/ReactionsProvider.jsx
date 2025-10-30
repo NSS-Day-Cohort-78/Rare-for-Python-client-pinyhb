@@ -33,7 +33,7 @@ export const ReactionsProvider = ({ children }) => {
 	}
 
 	const getReactions = () => {
-		return fetch(`http://localhost:8088/post-reaction`)
+		return fetch(`http://localhost:8088/reactions`)
 			.then(res => res.json())
 			.then(setReactions)
 	}
