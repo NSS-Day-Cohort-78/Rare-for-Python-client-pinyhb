@@ -7,12 +7,15 @@ import { useParams } from "react-router-dom"
 import { FilterCategory } from "./FilterCategory"
 import { TagsSearchBar } from "./TagsSearchBar"
 import { UserContext } from "../auth/UserProvider"
+import { Users } from "../users/Users"
 
 export const Posts = () => {
 	const { posts, getAllPosts } = useContext(PostContext)
-	const { user } = useParams()
+	const { id } = useParams()
 	const [filteredPosts, setFilteredPosts] = useState()
-	const { getCurrentUser, currentUser, token } = useContext(UserContext)
+	const [author, setAuthor] = useState(undefined)
+	const { getCurrentUser, currentUser, token, getUserById, user } =
+		useContext(UserContext)
 	const navigate = useNavigate()
 
 	const navCreatePost = () => {
@@ -25,13 +28,20 @@ export const Posts = () => {
 	}, [])
 
 	useEffect(() => {
-		if (user) {
-			const userPosts = posts.filter(p => p.user.id === parseInt(user))
+		getUserById(id)
+	}, [id])
+
+	useEffect(() => {
+		if (id) {
+			const userPosts = posts.filter(p => p.user.id === parseInt(id))
 			setFilteredPosts(userPosts)
+
+			setAuthor(user)
 		} else {
 			setFilteredPosts(posts)
+			setAuthor(undefined)
 		}
-	}, [posts, user])
+	}, [posts, id, user])
 
 	return (
 		<>
@@ -90,16 +100,22 @@ export const Posts = () => {
 							: filteredPosts &&
 							  filteredPosts.map(post =>
 									post.approved ? (
-										<PostList
-											key={post.id}
-											post={post}
-										/>
+										<PostList key={post.id} post={post} />
 									) : (
 										""
 									)
 							  )}
 					</tbody>
 				</table>
+				{id && author ? (
+					<button
+						onClick={() => navigate(`/user-profile/${author.id}`)}
+						className="button">
+						{author.username}
+					</button>
+				) : (
+					""
+				)}
 			</div>
 		</>
 	)

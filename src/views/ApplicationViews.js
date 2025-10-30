@@ -56,7 +56,10 @@ export const ApplicationViews = ({ token, setToken }) => {
 								</TagsProvider>
 							</PostProvider>
 						}>
-						<Route index element={<SubscribedPosts token={token}/>} />
+						<Route
+							index
+							element={<SubscribedPosts token={token} />}
+						/>
 						<Route path="posts" element={<Posts />} />
 						<Route path="create-post" element={<CreatePost />} />
 						{<Route path="postdetails" />}
@@ -76,7 +79,7 @@ export const ApplicationViews = ({ token, setToken }) => {
 							/>
 							<Route path="tags" element={<PostTags />} />
 						</Route>
-						<Route path="user-posts/:user" element={<Posts />} />
+						<Route path="user-posts/:id" element={<Posts />} />
 						<Route path="edit-post/:id" element={<EditPost />} />
 						<Route path="users" element={<Outlet />}>
 							<Route index element={<Users token={token} />} />
