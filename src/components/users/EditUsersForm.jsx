@@ -7,12 +7,22 @@ export const EditUsersForm = () => {
 	const navigate = useNavigate()
 	const { id } = useParams()
 
-	const { users, getUsers, getUserById, user, updateUserInfo } =
-		useContext(UserContext)
+	const {
+		users,
+		getUsers,
+		getUserById,
+		user,
+		updateUserInfo,
+		getUserDemotionQueue,
+		userDemotion,
+		token,
+		updateUserDemotion
+	} = useContext(UserContext)
 
 	useEffect(() => {
 		getUserById(id)
 		getUsers()
+		getUserDemotionQueue(id)
 	}, [])
 
 	useEffect(() => {
@@ -29,10 +39,22 @@ export const EditUsersForm = () => {
 				"make someone else an admin before the User Profile can be changed"
 			)
 		} else {
-			const data = {
-				admin: checked
+			if (!checked && !userDemotion.admin_id) {
+				const data = {
+					admin_id: token
+				}
+				updateUserDemotion(id, data).then(() => navigate(`/users`))
+			} else if (!checked && !userDemotion.approver_one_id) {
+				const data = {
+					approver_one_id: token
+				}
+				updateUserDemotion(id, data).then(() => navigate(`/users`))
+			} else {
+				const data = {
+					admin: checked
+				}
+				updateUserInfo(user.id, data).then(() => navigate(`/users`))
 			}
-			updateUserInfo(user.id, data).then(() => navigate(`/users`))
 		}
 	}
 	return (
