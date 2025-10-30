@@ -3,10 +3,9 @@ import { useNavigate } from "react-router-dom"
 import { PostContext } from "./PostProvider"
 import { UserContext } from "../auth/UserProvider"
 
-export const PostList = ({ post }) => {
+export const PostList = ({ post, currentUser }) => {
 	const navigate = useNavigate()
 	const [checked, setChecked] = useState(false)
-	const currentUser = useContext(UserContext).currentUser
 
 	const { approvePost, getAllPosts } = useContext(PostContext)
 

@@ -11,12 +11,13 @@ import { ViewPostReactions } from "../reactions/ViewPostReactions"
 export const PostDetails = () => {
 	const { getPostById, post } = useContext(PostContext)
 	const { id } = useParams()
-	const { token } = useContext(UserContext)
+	const { token, currentUser, getCurrentUser } = useContext(UserContext)
 	const navigate = useNavigate()
 	const [modal, setModal] = useState(false)
 
 	useEffect(() => {
 		getPostById(id)
+		getCurrentUser(token)
 	}, [])
 
 	return (
@@ -42,9 +43,9 @@ export const PostDetails = () => {
 						</div>
 					</div>
 					<div className="card-footer">
-							<p className="card-footer-item">
-								{post.user?.username}
-							</p>
+						<p className="card-footer-item">
+							{post.user?.username}
+						</p>
 					</div>
 					<div className="is-flex-wrap-wrap is-justify-content-space-between">
 						<div className="is-flex is-justify-content-space-between custom-flex-gap">
@@ -56,7 +57,7 @@ export const PostDetails = () => {
 				</div>
 			</div>
 
-			{parseInt(token) === post.user?.id ? (
+			{currentUser.admin || parseInt(token) === post.user?.id ? (
 				<div className="is-flex is-align-items-center is-justify-content-center">
 					<button
 						className="button"
