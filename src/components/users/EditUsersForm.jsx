@@ -16,7 +16,10 @@ export const EditUsersForm = () => {
 		getUserDemotionQueue,
 		userDemotion,
 		token,
-		updateUserDemotion
+		updateUserDemotion,
+		deleteDemotionQueue,
+		addUserDemotion,
+		setUserDemotion
 	} = useContext(UserContext)
 
 	useEffect(() => {
@@ -33,38 +36,35 @@ export const EditUsersForm = () => {
 		e.preventDefault()
 
 		const found = users.filter(u => u.admin)
-		console.log(found)
-		if (!checked && found.length <= 1) {
+
+		if (!checked && found.length <= 2) {
 			window.alert(
 				"make someone else an admin before the User Profile can be changed"
 			)
-		} else if (
-			(!checked && userDemotion.admin_id === parseInt(token)) ||
-			(!checked && userDemotion.approver_one_id === parseInt(token))
-		) {
-			window.alert("you already demoted them")
-		} else {
-			if (!checked && !userDemotion.admin_id) {
-				const data = {
-					admin_id: token
-				}
-				updateUserDemotion(id, data).then(() => navigate(`/users`))
-			} else if (!checked && !userDemotion.approver_one_id) {
-				const data = {
-					approver_one_id: token
-				}
-				const userData = {
-					admin: checked
-				}
-				updateUserDemotion(id, data)
-					.then(() => updateUserInfo(user.id, userData))
-					.then(() => navigate(`/users`))
-			} else {
-				const data = {
-					admin: checked
-				}
-				updateUserInfo(user.id, data).then(() => navigate(`/users`))
+		} else if (!userDemotion) {
+			const data = {
+				user_id: parseInt(id),
+				admin_id: parseInt(token),
+				approver_one_id: null
 			}
+			addUserDemotion(data).then(() => navigate(`/users`))
+		} else if (
+			userDemotion.admin_id === parseInt(token) ||
+			userDemotion.approver_one_id === parseInt(token)
+		) {
+			window.alert("you already voted to change their status")
+		} else if (userDemotion && !userDemotion.approver_one_id) {
+			const data = {
+				approver_one_id: parseInt(token)
+			}
+			const userData = {
+				admin: checked
+			}
+			updateUserDemotion(id, data)
+				.then(() => updateUserInfo(user.id, userData))
+				.then(() => deleteDemotionQueue(userDemotion.id))
+				.then(() => setUserDemotion(undefined))
+				.then(() => navigate(`/users`))
 		}
 	}
 	return (
