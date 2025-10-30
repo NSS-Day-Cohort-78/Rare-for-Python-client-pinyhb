@@ -38,6 +38,11 @@ export const EditUsersForm = () => {
 			window.alert(
 				"make someone else an admin before the User Profile can be changed"
 			)
+		} else if (
+			(!checked && userDemotion.admin_id === parseInt(token)) ||
+			(!checked && userDemotion.approver_one_id === parseInt(token))
+		) {
+			window.alert("you already demoted them")
 		} else {
 			if (!checked && !userDemotion.admin_id) {
 				const data = {
@@ -48,7 +53,12 @@ export const EditUsersForm = () => {
 				const data = {
 					approver_one_id: token
 				}
-				updateUserDemotion(id, data).then(() => navigate(`/users`))
+				const userData = {
+					admin: checked
+				}
+				updateUserDemotion(id, data)
+					.then(() => updateUserInfo(user.id, userData))
+					.then(() => navigate(`/users`))
 			} else {
 				const data = {
 					admin: checked
