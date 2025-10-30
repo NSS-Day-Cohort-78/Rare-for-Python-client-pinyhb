@@ -17,23 +17,37 @@ export const UsersList = ({ user, currentUser, users }) => {
 	}
 
 	const confirmDeactivate = () => {
-		return (
-			<div className="is-flex m-2">
-				<p>Are you sure you want to deactivate this user account?</p>
-				<div>
-					<button className="is-clickable mx-1" 
-					onClick={handleDeactivate}
-					>
-						Confirm
-					</button>
+		const adminUsers = users.filter(u => u.admin && u.active)
+		if (adminUsers.length > 2) {
+			return (
+				<div className="is-flex m-2">
+					<p>Are you sure you want to deactivate this user account?</p>
+					<div>
+						<button className="is-clickable mx-1" 
+						onClick={handleDeactivate}
+						>
+							Confirm
+						</button>
+						<button
+							className="is-clickable mx-1"
+							onClick={() => setModal(false)}>
+							Cancel
+						</button>
+					</div>
+				</div>
+			)
+		} else {
+			return (
+				<div className="is-flex m-2">
+					<p>Please set new admin before deactivating.</p>
 					<button
 						className="is-clickable mx-1"
 						onClick={() => setModal(false)}>
 						Cancel
 					</button>
 				</div>
-			</div>
-		)
+			)
+		}
 	}
 
 	return (
@@ -52,7 +66,7 @@ export const UsersList = ({ user, currentUser, users }) => {
 						className="button mx-1">
 						Edit
 					</button>
-					{!user.admin && user.active ? (
+					{user.active ? (
 						<button
 							onClick={() => setModal(true)}
 							className="button mx-1">
