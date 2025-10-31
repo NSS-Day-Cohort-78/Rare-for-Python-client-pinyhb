@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { PostContext } from "./PostProvider"
 import { PostList } from "./PostList"
 import { SearchBar } from "./SearchBar"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import { useParams } from "react-router-dom"
 import { FilterCategory } from "./FilterCategory"
 import { TagsSearchBar } from "./TagsSearchBar"
@@ -17,6 +17,7 @@ export const Posts = () => {
 	const { getCurrentUser, currentUser, token, getUserById, user } =
 		useContext(UserContext)
 	const navigate = useNavigate()
+	const location = useLocation()
 
 	const navCreatePost = () => {
 		navigate("/create-post")
@@ -25,7 +26,8 @@ export const Posts = () => {
 	useEffect(() => {
 		getAllPosts()
 		getCurrentUser(token)
-	}, [])
+	}, [location.pathname])	
+		
 
 	useEffect(() => {
 		getUserById(id)

@@ -8,7 +8,7 @@ export const PostProvider = ({ children }) => {
 	const [postTags, setPostTags] = useState([])
 
 	const getAllPosts = () => {
-		fetch(`http://localhost:8088/posts`)
+		return fetch(`http://localhost:8088/posts`)
 			.then(res => res.json())
 			.then(setPosts)
 	}
