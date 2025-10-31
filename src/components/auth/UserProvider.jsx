@@ -100,6 +100,18 @@ export const UserProvider = ({ children }) => {
 		})
 	}
 
+	const uploadAvatar = async img => {
+		const response = await fetch(
+			`https://api.imgbb.com/1/upload?key=fa084ec67f83084b83b832c6d2ecf844`,
+			{
+				method: "POST",
+				body: img
+			}
+		)
+		const url = await response.json()
+		return url
+	}
+
 	return (
 		<UserContext.Provider
 			value={{
@@ -120,7 +132,8 @@ export const UserProvider = ({ children }) => {
 				deleteDemotionQueue,
 				addUserDemotion,
 				setUserDemotion,
-				deactivateUser
+				deactivateUser,
+				uploadAvatar
 			}}>
 			{children}
 		</UserContext.Provider>
