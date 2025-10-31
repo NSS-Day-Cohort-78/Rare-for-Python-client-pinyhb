@@ -8,6 +8,7 @@ export const UserProvider = ({ children }) => {
 	const [users, setUsers] = useState([])
 	const [user, setUser] = useState({})
 	const [currentUser, setCurrentUser] = useState({})
+	const [userDemotion, setUserDemotion] = useState(undefined)
 
 	const getUsers = () => {
 		fetch(`http://localhost:8088/users`)
@@ -47,6 +48,58 @@ export const UserProvider = ({ children }) => {
 		})
 	}
 
+	const activateUser = (id, body) => {
+		return fetch(`http://localhost:8088/activate-user/${id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		})
+	}
+
+	const deactivateUser = (id, body) => {
+		return fetch(`http://localhost:8088/deactivate-user/${id}`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		})
+	}
+
+	const getUserDemotionQueue = id => {
+		fetch(`http://localhost:8088/demotion/${id}`)
+			.then(res => res.json())
+			.then(setUserDemotion)
+	}
+
+	const addUserDemotion = body => {
+		return fetch(`http://localhost:8088/demotion`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		})
+	}
+
+	const updateUserDemotion = (id, body) => {
+		return fetch(`http://localhost:8088/demotion/${id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		})
+	}
+
+	const deleteDemotionQueue = id => {
+		return fetch(`http://localhost:8088/demotion/${id}`, {
+			method: "DELETE"
+		})
+	}
+
 	return (
 		<UserContext.Provider
 			value={{
@@ -59,7 +112,15 @@ export const UserProvider = ({ children }) => {
 				subscribeToUser,
 				getCurrentUser,
 				currentUser,
-				updateUserInfo
+				updateUserInfo,
+				activateUser,
+				getUserDemotionQueue,
+				userDemotion,
+				updateUserDemotion,
+				deleteDemotionQueue,
+				addUserDemotion,
+				setUserDemotion,
+				deactivateUser
 			}}>
 			{children}
 		</UserContext.Provider>

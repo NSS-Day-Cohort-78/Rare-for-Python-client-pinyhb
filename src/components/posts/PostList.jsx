@@ -1,11 +1,27 @@
-import React from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { PostContext } from "./PostProvider"
+import { UserContext } from "../auth/UserProvider"
 
-export const PostList = ({ post }) => {
+export const PostList = ({ post, currentUser }) => {
 	const navigate = useNavigate()
+	const [checked, setChecked] = useState(false)
+
+	const { approvePost, getAllPosts } = useContext(PostContext)
+
+	useEffect(() => {
+		post.approved ? setChecked(true) : setChecked(false)
+	}, [post])
 
 	const navToEditPost = () => {
 		navigate(`/edit-post/${post.id}`)
+	}
+
+	const handleSave = e => {
+		const data = {
+			approved: checked
+		}
+		approvePost(post.id, data).then(() => getAllPosts())
 	}
 
 	return (
@@ -21,7 +37,25 @@ export const PostList = ({ post }) => {
 				{post.user.first_name} {post.user.last_name}
 			</td>
 			<td>{post.category.label}</td>
-			<td><button onClick={navToEditPost}>Edit</button></td>
+			<td>
+				<button onClick={navToEditPost}>Edit</button>
+			</td>
+			{currentUser?.admin ? (
+				<td className="is-flex is-justify-content-space-around is-align-items-center">
+					<input
+						type="checkbox"
+						checked={checked}
+						id="approved"
+						name="approved"
+						onChange={() => setChecked(!checked)}
+					/>
+					<button onClick={handleSave} className="button">
+						Save
+					</button>
+				</td>
+			) : (
+				""
+			)}
 		</tr>
 	)
 }

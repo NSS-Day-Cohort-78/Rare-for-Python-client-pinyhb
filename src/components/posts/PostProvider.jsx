@@ -29,15 +29,16 @@ export const PostProvider = ({ children }) => {
 		return fetch(`http://localhost:8088/posts/${updatedPost.id}`, {
 			method: "PUT",
 			headers: {
-				"Content-Type": "application/json",
+				"Content-Type": "application/json"
 			},
 			body: JSON.stringify(updatedPost)
 		})
 	}
 
 	const getPostTagById = id => {
-		return fetch(`http://localhost:8088/post-tags/${id}`)
-			.then(res => res.json())
+		return fetch(`http://localhost:8088/post-tags/${id}`).then(res =>
+			res.json()
+		)
 	}
 
 	const getAllPostTags = () => {
@@ -46,29 +47,46 @@ export const PostProvider = ({ children }) => {
 			.then(setPostTags)
 	}
 
+	const approvePost = (id, body) => {
+		return fetch(`http://localhost:8088/approval/${id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		})
+	}
+
 	return (
 		<PostContext.Provider
-			value={{ posts, getAllPosts, getPostById, post, deletePost, updatePost, getPostTagById, getAllPostTags, postTags }}>
+			value={{
+				posts,
+				getAllPosts,
+				getPostById,
+				post,
+				deletePost,
+				updatePost,
+				getPostTagById,
+				getAllPostTags,
+				postTags,
+				approvePost
+			}}>
 			{children}
 		</PostContext.Provider>
 	)
 }
 
-export const addNewPost = (post) => {
-  return fetch("http://localhost:8088/posts", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    }, 
-    body: JSON.stringify(post)
-  }).then(res => res.json())
+export const addNewPost = post => {
+	return fetch("http://localhost:8088/posts", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			Accept: "application/json"
+		},
+		body: JSON.stringify(post)
+	}).then(res => res.json())
 }
-
-
 
 export const getAllCategories = () => {
-	return fetch(`http://localhost:8088/categories`)
-		.then(res => res.json())
+	return fetch(`http://localhost:8088/categories`).then(res => res.json())
 }
-

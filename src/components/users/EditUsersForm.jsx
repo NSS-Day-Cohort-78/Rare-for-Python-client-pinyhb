@@ -7,10 +7,25 @@ export const EditUsersForm = () => {
 	const navigate = useNavigate()
 	const { id } = useParams()
 
-	const { getUserById, user, updateUserInfo } = useContext(UserContext)
+	const {
+		users,
+		getUsers,
+		getUserById,
+		user,
+		updateUserInfo,
+		getUserDemotionQueue,
+		userDemotion,
+		token,
+		updateUserDemotion,
+		deleteDemotionQueue,
+		addUserDemotion,
+		setUserDemotion
+	} = useContext(UserContext)
 
 	useEffect(() => {
 		getUserById(id)
+		getUsers()
+		getUserDemotionQueue(id)
 	}, [])
 
 	useEffect(() => {
@@ -19,10 +34,38 @@ export const EditUsersForm = () => {
 
 	const handleSave = e => {
 		e.preventDefault()
-		const data = {
-			admin: checked
+
+		const found = users.filter(u => u.admin)
+
+		if (!checked && found.length <= 2) {
+			window.alert(
+				"make someone else an admin before the User Profile can be changed"
+			)
+		} else if (!userDemotion) {
+			const data = {
+				user_id: parseInt(id),
+				admin_id: parseInt(token),
+				approver_one_id: null
+			}
+			addUserDemotion(data).then(() => navigate(`/users`))
+		} else if (
+			userDemotion.admin_id === parseInt(token) ||
+			userDemotion.approver_one_id === parseInt(token)
+		) {
+			window.alert("you already voted to change their status")
+		} else if (userDemotion && !userDemotion.approver_one_id) {
+			const data = {
+				approver_one_id: parseInt(token)
+			}
+			const userData = {
+				admin: checked
+			}
+			updateUserDemotion(id, data)
+				.then(() => updateUserInfo(user.id, userData))
+				.then(() => deleteDemotionQueue(userDemotion.id))
+				.then(() => setUserDemotion(undefined))
+				.then(() => navigate(`/users`))
 		}
-		updateUserInfo(user.id, data).then(() => navigate(`/users`))
 	}
 	return (
 		<div className="container">

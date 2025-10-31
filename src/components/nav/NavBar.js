@@ -15,8 +15,10 @@ export const NavBar = ({ token, setToken }) => {
 		navbar.current.classList.toggle("is-active")
 	}
 
-	useEffect (() => {
-		getCurrentUser(token)
+	useEffect(() => {
+		if (token) {
+			getCurrentUser(token)
+		}
 	}, [token])
 
 	return (

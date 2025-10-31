@@ -1,11 +1,9 @@
-import React, { useContext, useEffect, useState } from "react"
-import { UserContext } from "../auth/UserProvider"
+import React, { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { DeleteCommentButton } from "./DeleteCommentButton"
 
-export const CommentsList = ({ comment }) => {
+export const CommentsList = ({ comment, token, currentUser }) => {
 	const navigate = useNavigate()
-	const { token } = useContext(UserContext)
 	const { id } = useParams()
 	const [commentObj, setCommentObj] = useState({})
 	const [modal, setModal] = useState(false)
@@ -20,7 +18,7 @@ export const CommentsList = ({ comment }) => {
 			<p>{comment.content}</p>
 			<div className="is-flex is-grouped is-flex-direction-row is-align-items-center">
 				<p>{comment.author.username}</p>
-				{parseInt(token) === comment.author?.id ? (
+				{currentUser.admin || parseInt(token) === comment.author?.id ? (
 					<div className="is-flex is-align-items-center is-justify-content-center">
 						<i
 							onClick={() => setModal(true)}

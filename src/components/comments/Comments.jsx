@@ -3,15 +3,18 @@ import { useNavigate, useParams } from "react-router-dom"
 import { CommentsContext } from "./CommentsProvider"
 import { CommentsList } from "./CommentsList"
 import "./comment.css"
+import { UserContext } from "../auth/UserProvider"
 
 export const Comments = ({ token }) => {
 	const { id } = useParams()
+	const { currentUser, getCurrentUser } = useContext(UserContext)
 
 	const navigate = useNavigate()
 	const { getAllComments, comments } = useContext(CommentsContext)
-	
+
 	useEffect(() => {
 		getAllComments(id)
+		getCurrentUser(token)
 	}, [])
 
 	return (
@@ -23,7 +26,14 @@ export const Comments = ({ token }) => {
 				Back to Post
 			</button>
 			{comments &&
-				comments.map(c => <CommentsList token={token} key={c.id} comment={c} />)}
+				comments.map(c => (
+					<CommentsList
+						token={token}
+						key={c.id}
+						comment={c}
+						currentUser={currentUser}
+					/>
+				))}
 		</div>
 	)
 }

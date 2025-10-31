@@ -1,4 +1,3 @@
-import { getSelectionRange } from "@testing-library/user-event/dist/utils"
 import React, { useState } from "react"
 
 export const CreateReactionsForm = ({ getReactions, createReaction }) => {
