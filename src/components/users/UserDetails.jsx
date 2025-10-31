@@ -5,9 +5,13 @@ import { SubscriptionContext } from "../subscriptions/SubscriptionProvider"
 
 export const UserDetails = ({ token }) => {
 	const { id } = useParams()
-	const { user, getUserById, subscribeToUser } = useContext(UserContext)
+	const { user, getUserById, subscribeToUser, uploadAvatar, updateUserInfo } =
+		useContext(UserContext)
 	const [subscribed, setSubscribed] = useState(false)
 	const [subscription, setSubscription] = useState(null)
+	const [imageUrl, setImageUrl] = useState("")
+	const [image, setImage] = useState()
+
 	const {
 		getSubscriptionByFollowerId,
 		unsubscribeToUser,
@@ -56,6 +60,13 @@ export const UserDetails = ({ token }) => {
 			.then(setSubscription)
 	}
 
+	const handleUploadImage = async e => {
+		const data = new FormData()
+		data.append("image", e.target.files[0])
+		const response = await uploadAvatar(data)
+		setImageUrl(response.data.url)
+	}
+
 	return (
 		<div className="card-container p-5">
 			<div className="card">
@@ -65,12 +76,36 @@ export const UserDetails = ({ token }) => {
 							<img
 								className="image"
 								src={user.profile_image_url}
-								alt={user.first_name}
+								alt="WHY"
 							/>
 						</div>
 						<p>
 							{user.first_name} {user.last_name}
 						</p>
+						{parseInt(token) === parseInt(id) ? (
+							<>
+								<input
+									type="file"
+									onChange={e => handleUploadImage(e)}
+								/>
+								<button
+									className="button"
+									onClick={e => {
+										e.preventDefault()
+										const body = {
+											profile_image_url: imageUrl
+										}
+										updateUserInfo(id, body).then(() =>
+											getUserById(id)
+										)
+										setImage(imageUrl)
+									}}>
+									Save
+								</button>
+							</>
+						) : (
+							""
+						)}
 					</div>
 					<div className="card-content">
 						<h2>{user.username}</h2>
