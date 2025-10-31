@@ -1,17 +1,16 @@
 import { useRef, React, useState, useEffect, useId, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllCategories } from "./PostProvider";
-import { addNewPost } from "./PostProvider";
 import { UserContext } from "../auth/UserProvider";
 import { PostContext } from "./PostProvider";
 
 export const CreatePost = () => {
     const { currentUser, getCurrentUser } = useContext(UserContext)
-    const { getAllPosts } = useContext(PostContext)
+    const { getAllPosts, uploadImage, getAllCategories, addNewPost } = useContext(PostContext)
     const [categories, setCategories] = useState([])
+    const [ image, setImage ] = useState()
+    const [ imageUrl, setImageUrl] = useState("")
     const categoryId = useRef()
     const title = useRef()
-    const imageUrl = useRef()
     const content = useRef()
     const navigate = useNavigate()
 
@@ -19,20 +18,29 @@ export const CreatePost = () => {
         getAllCategories().then(data => {setCategories(data)})
     }, [])
 
-    const handleCreatePost = (e) => {
+    const handleUploadImage = async (img) => {
+            const data = new FormData()
+            data.append("image", img)
+            const response = await uploadImage(data)
+            setImageUrl(response.data.image.url)
+    }
+
+    const handleCreatePost = async (e) => {
         e.preventDefault()
+
+       
 
         if (
             categoryId.current.value && 
-            title.current.value && 
-            imageUrl.current.value && 
+            title.current.value &&  
             content.current.value) {
+                if (imageUrl) {
                 const userId = localStorage.getItem("auth_token")
                 const newPost = {
                     user_id: parseInt(userId),
                     category_id: parseInt(categoryId.current.value),
                     title: title.current.value,
-                    image_url: imageUrl.current.value,
+                    image_url: imageUrl,
                     content: content.current.value,
                     approved: currentUser.admin === 1 ? 1 : 0,
                 }
@@ -44,7 +52,7 @@ export const CreatePost = () => {
                     } else {
                         navigate("posts/")
                     }
-                    })
+                    })}
             } else {
             console.log("fill out all fields!!!")
             }
@@ -71,14 +79,15 @@ export const CreatePost = () => {
                         </div>
                         <label className="label">Image URL:</label>
                         <div className="control">
-                            <input className="input" type="text" ref={imageUrl} />
+                            <input className="input" type="file" onChange={(e) => handleUploadImage(e.target.files[0])}/>
                         </div>
                         <label className="label">Content:</label>
                         <div>
                             <input className="input" type="text" ref={content} />
                         </div>
                         <div>
-                            <button onClick={handleCreatePost}>Save</button>
+                            <button onClick={async (e) => {
+                                await handleCreatePost(e)}}>Save</button>
                         </div>
                     </div>
                 </form>

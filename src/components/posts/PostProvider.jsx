@@ -57,6 +57,33 @@ export const PostProvider = ({ children }) => {
 		})
 	}
 
+	const addNewPost = async (post) => {
+		const response = await fetch("http://localhost:8088/posts", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			Accept: "application/json"
+		},
+			body: JSON.stringify(post)
+		})
+		const data = await response.json()
+		return data
+	}
+
+	const getAllCategories = () => {
+		return fetch(`http://localhost:8088/categories`).then(res => res.json())
+	}
+
+	const uploadImage = async (img) => {
+		const response = await fetch(`https://api.imgbb.com/1/upload?key=fa084ec67f83084b83b832c6d2ecf844`, {
+			method: "POST",
+			body: img
+		})
+		const url = await response.json()
+		return url
+	}
+
+
 	return (
 		<PostContext.Provider
 			value={{
@@ -69,24 +96,12 @@ export const PostProvider = ({ children }) => {
 				getPostTagById,
 				getAllPostTags,
 				postTags,
-				approvePost
+				approvePost,
+				addNewPost,
+				getAllCategories,
+				uploadImage
 			}}>
 			{children}
 		</PostContext.Provider>
 	)
-}
-
-export const addNewPost = post => {
-	return fetch("http://localhost:8088/posts", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-			Accept: "application/json"
-		},
-		body: JSON.stringify(post)
-	}).then(res => res.json())
-}
-
-export const getAllCategories = () => {
-	return fetch(`http://localhost:8088/categories`).then(res => res.json())
 }
