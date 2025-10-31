@@ -12,8 +12,7 @@ export const TagsSearchBar = ({ setFilteredPosts, posts }) => {
     const handleChange = e => {
         setSearchTerm(e.target.value)
     }
-    const handleKeyDown = e => {
-        if (e.key === "Enter") {
+    const handleKeyDown = () => {
             const filteredPostTags = postTags.filter(pt =>
                 pt.tag.label.toLowerCase().includes(searchTerm.toLowerCase())
             )
@@ -22,17 +21,22 @@ export const TagsSearchBar = ({ setFilteredPosts, posts }) => {
             const filteredPosts = posts.filter(p => postIds.includes(p.id))
 
             setFilteredPosts(filteredPosts)
-        }
     }
 
     return (
-        <input
-            className="mx-2"
-            type="text"
-            placeholder="Search"
-            value={searchTerm}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-        />
+        <div className="field has-addons">
+            <p className="control">
+                <input
+                    className="mx-2 input"
+                    type="text"
+                    placeholder="Search by tag"
+                    value={searchTerm}
+                    onChange={handleChange}
+                />
+            </p>
+            <p className="control">
+            <button onClick={handleKeyDown} className="button">Search</button>
+            </p>
+        </div>
     )
 }

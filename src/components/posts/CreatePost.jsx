@@ -51,38 +51,46 @@ export const CreatePost = () => {
     }
 
     return (
-        <>
+        <div className="container">
             <section>
                 <form>
-                    <h1 className="title">Create a post</h1>
+                    <h1 className="title is-flex is-justify-content-center">Create a post</h1>
                     <div className="field">
-                        <label className="label">Category:</label>
-                        <div className="control">
-                            <select  ref={categoryId}>
-                                <option value="">Select...</option>
-                                {categories.map((category) => {
-                                    return <option key={category.id} value={category.id}>{category.label}</option>
-                                })}
-                            </select>
+                        <div className="is-flex is-justify-content-center p-2">
+                            <label className="label mr-4">Category:</label>
+                            <div className="control">
+                                <select  ref={categoryId}>
+                                    <option value="">Select...</option>
+                                    {categories.map((category) => {
+                                        return <option key={category.id} value={category.id}>{category.label}</option>
+                                    })}
+                                </select>
+                            </div>
                         </div>
-                        <label className="label">Title:</label>
-                        <div className="control">
-                            <input className="input" type="text" ref={title} />
+                        <div className="p-2">
+                            <label className="label">Title:</label>
+                            <div className="control">
+                                <input className="input" type="text" ref={title} />
+                            </div>
                         </div>
-                        <label className="label">Image URL:</label>
-                        <div className="control">
-                            <input className="input" type="text" ref={imageUrl} />
+                        <div className="p-2">
+                            <label className="label">Image URL:</label>
+                            <div className="control">
+                                <input className="input" type="text" ref={imageUrl} />
+                            </div>
                         </div>
-                        <label className="label">Content:</label>
-                        <div>
-                            <input className="input" type="text" ref={content} />
+                        <div className="p-2">
+                            <label className="label">Content:</label>
+                            <div>
+                                <textarea className="input" type="text" ref={content} />
+                            </div>
                         </div>
-                        <div>
-                            <button onClick={handleCreatePost}>Save</button>
+                        <div className="is-flex is-justify-content-center p-2">
+                            <button className="button" onClick={handleCreatePost}>Save</button>
                         </div>
                     </div>
                 </form>
             </section>
-        </>
+        </div>
     )
 }

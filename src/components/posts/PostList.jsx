@@ -38,7 +38,7 @@ export const PostList = ({ post, currentUser }) => {
 			</td>
 			<td>{post.category.label}</td>
 			<td>
-				<button onClick={navToEditPost}>Edit</button>
+				<button className="button" onClick={navToEditPost}>Edit</button>
 			</td>
 			{currentUser?.admin ? (
 				<td className="is-flex is-justify-content-space-around is-align-items-center">

@@ -47,16 +47,14 @@ export const Posts = () => {
 
 	return (
 		<>
-			<div className="container is-flex is-flex-direction-row is-justify-content-space-evenly p-5">
-				<div className="is-grouped is-flex is-flex-direction-row">
-					<p>Search by title:</p>
+			<div className="container is-flex is-flex-direction-row is-justify-content-space-evenly is-align-content-center p-5">
+				<div>
 					<SearchBar
 						setFilteredPosts={setFilteredPosts}
 						posts={posts}
 					/>
 				</div>
-				<div className="is-grouped is-flex is-flex-direction-row">
-					<p>Search by tag:</p>
+				<div>
 					<TagsSearchBar
 						setFilteredPosts={setFilteredPosts}
 						posts={posts}
@@ -66,14 +64,13 @@ export const Posts = () => {
 					setFilteredPosts={setFilteredPosts}
 					posts={posts}
 				/>
+					<button
+						className="button is-link is-focused"
+						onClick={navCreatePost}>
+						Create Post
+					</button>
 			</div>
-			<div className="buttons has-addons is-right">
-				<button
-					className="button is-link is-focused"
-					onClick={navCreatePost}>
-					Create Post
-				</button>
-			</div>
+
 			<div className="p-5 container">
 				<table className=" table is-bordered is-fullwidth">
 					<thead>
